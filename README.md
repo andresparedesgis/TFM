@@ -143,9 +143,9 @@ Todos los datos son de acceso abierto y libre reproducción, garantizando la rep
 
 ## 📄 Documentación
 
-- 📘 **Memoria completa** → `memoria/plantilla_PFM_actualizada.docx`
-- 🌐 **Web del proyecto** → `web/index.html` (apertura directa en navegador)
-- 🔧 **Documentación técnica** → `web/tecnico.html`
+- 📘 **Memoria completa** → `Memoria/Trabajo_TFM_APF.pdf`
+- 🌐 **Web del proyecto** → `Web/index.html` (apertura directa en navegador)
+- 🔧 **Documentación técnica** → `Web/tecnico.html`
 
 ---
 
