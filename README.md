@@ -18,17 +18,16 @@ El sistema permite, entre otras cosas, calcular rutas teniendo en cuenta las res
 
 ```
 📦 TFM-SIG-Movilidad-Madrid
-├── 📄 memoria/
-│   └── plantilla_PFM_actualizada.docx     # Memoria académica completa del TFM
-├── 🌐 web/
+├── 📄 Memoria/
+│   └── Trabajo_TFM_APF.pdf     # Memoria académica completa del TFM
+├── 🌐 Web/
 │   ├── index.html                          # Página principal del proyecto
 │   └── tecnico.html                        # Página de documentación técnica
-├── 🐍 notebooks/
+├── 🐍 Notebooks/
 │   ├── notebook1_red_viaria.py             # Construcción de la red viaria
 │   └── notebook2_rutas_ZBE.py               # Análisis de rutas ZBE
-├── 🔧 modelbuilder/
-│   ├── Modelo1_Infraestructura.tbx         # Model 1: GDB + distribución de capas
-│   └── Modelo2_Cobertura_Aparcamientos.tbx # Model 2: Análisis espacial
+├── 🔧 Modelbuilder/
+│   ├── Proyecto_Completo.Zip               # Proyecto completo para ArcGIS Pro
 └── 📄 README.md
 ```
 
@@ -38,7 +37,7 @@ El sistema permite, entre otras cosas, calcular rutas teniendo en cuenta las res
 
 ### Geodatabase — `GDB_Movilidad`
 
-La geodatabase está estructurada en **6 feature datasets** temáticos:
+La geodatabase inicial está estructurada en **5 feature datasets** temáticos:
 
 | Feature Dataset | Contenido principal |
 |---|---|
@@ -47,7 +46,6 @@ La geodatabase está estructurada en **6 feature datasets** temáticos:
 | `Estacionamientos` | Zonas SER (azul, naranja, verde, rojo), aparcamientos públicos |
 | `Seguridad_Vial` | Radares de velocidad fija |
 | `Servicios` | Gasolineras, recarga eléctrica, sitios públicos, elementos de interés |
-| `Multas` | (Reservado para datos de sanciones) |
 
 ---
 
@@ -75,28 +73,8 @@ La geodatabase está estructurada en **6 feature datasets** temáticos:
 - Evalúa si la ruta cruza zonas prohibidas para la etiqueta del vehículo mediante `Intersect`.
 - Si la ruta no es válida, calcula una ruta alternativa (Ruta 2) usando `Polygon Barriers`.
 - Campo de resultado: `Color_ZBE` → `VERDE` (acceso permitido) / `ROJO` (acceso restringido).
-
----
-
-### Experience Builder
-
-Aplicación web de página única con cuatro componentes principales:
-
-1. **Widget de mapa** — Selección de origen y destino mediante clic sobre el mapa.
-2. **Widget de selección** — Desplegable para elegir la etiqueta ambiental.
-3. **Widget de Geoprocessing** — Conecta con el Web Tool y lanza el análisis.
-4. **Panel de resultados** — Muestra la ruta sobre el mapa (verde/roja) e información textual.
-
-### Aplicaciones móviles
-
-| Aplicación | Perfil | Función |
-|---|---|---|
-| **Field Maps** | Técnicos GIS, emergencias | Edición detallada de gasolineras, recargas, radares, incidencias |
-| **ArcGIS QuickCapture** | Ciudadanía general | Reporte rápido de radares, advertencias y accidentes |
-
----
-
-## 🔑 Lógica de restricciones ZBE
+- 
+🔑 Lógica de restricciones ZBE
 
 | Etiqueta | ZBE General | ZBEDEP Distrito Centro | ZBEDEP Plaza Elíptica |
 |---|---|---|---|
@@ -105,6 +83,24 @@ Aplicación web de página única con cuatro componentes principales:
 | **C** | ✅ Acceso libre | ❌ Restringido | ❌ Restringido |
 | **B** | ✅ Acceso libre | ❌ Restringido | ❌ Restringido |
 | **SIN etiqueta** | ❌ Restringido | ❌ Restringido | ❌ Restringido |
+
+---
+
+### Experience Builder
+
+Aplicación web de página única con cuatro componentes principales:
+
+1. **Widget de mapa** — Selección de origen y destino mediante clic sobre el mapa.
+2. **Listado elementos de Interes** — Listado de los elementos de interes repartidos por Madrid.
+3. **Visualización en tiempo real de los elementos del mapa** — Visualizacion de los elementos que se puedan añadir o actualizar con el uso de ArcGIS QuickCaptures y Field Maps en el mapa en tiempo real.
+4. **Panel de resultados** — Muestra la ruta sobre el mapa (verde/roja) e información textual.
+
+### Aplicaciones móviles
+
+| Aplicación | Perfil | Función |
+|---|---|---|
+| **Field Maps** | Técnicos GIS, emergencias | Edición detallada de gasolineras, recargas, radares, incidencias |
+| **ArcGIS QuickCapture** | Ciudadanía general | Reporte rápido de radares, advertencias y accidentes |
 
 ---
 
