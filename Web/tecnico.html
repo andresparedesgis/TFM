@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentación Técnica — SIG Movilidad Madrid</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #0033A0;
+      --azul-medio: #1A56C4;
+      --acento: #E8C84A;
+      --oscuro: #0D0D1A;
+      --fondo: #F5F3EE;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--fondo); color: var(--oscuro); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(13,13,26,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1rem; color: white; letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--acento); }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .nav-back:hover { color: var(--acento); }
+    .nav-back::before { content: '←'; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.45); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: white; }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--oscuro); padding: 9rem 3rem 4rem;
+      border-bottom: 3px solid var(--acento);
+    }
+    .page-header-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--acento); margin-bottom: 1rem; }
+    .page-header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .page-header p { font-size: 0.95rem; color: rgba(255,255,255,0.45); max-width: 560px; line-height: 1.7; }
+
+    /* SECTIONS */
+    .section { padding: 5rem 3rem; }
+    .section-dark { background: #111120; }
+    .section-mid { background: #0D0D1A; }
+    .section-light { background: white; }
+    .section-fondo { background: var(--fondo); }
+    .section-blue { background: var(--azul); }
+
+    .section-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .tag-gold { color: var(--acento); }
+    .tag-blue { color: var(--azul); }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .title-white { color: white; }
+    .section-desc { font-size: 0.95rem; font-weight: 300; line-height: 1.75; max-width: 600px; }
+    .desc-muted { color: rgba(255,255,255,0.45); }
+    .desc-dark { color: #555; }
+
+    /* DATASETS GRID */
+    .datasets-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.07); }
+    .ds-card { background: rgba(255,255,255,0.025); padding: 1.6rem; border-top: 3px solid transparent; transition: all 0.2s; }
+    .ds-card:hover { background: rgba(255,255,255,0.07); border-top-color: var(--acento); }
+    .ds-num { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.5rem; }
+    .ds-name { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: white; margin-bottom: 0.7rem; }
+    .ds-layers { list-style: none; display: flex; flex-direction: column; gap: 0.28rem; }
+    .ds-layers li { font-size: 0.74rem; color: rgba(255,255,255,0.4); padding-left: 0.8rem; position: relative; line-height: 1.45; }
+    .ds-layers li::before { content: '—'; position: absolute; left: 0; color: rgba(255,255,255,0.15); }
+
+    /* MODELOS */
+    .modelos-grid { margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .modelo-card { border: 1.5px solid rgba(0,51,160,0.15); padding: 2.5rem; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; background: white; }
+    .modelo-card:hover { border-color: var(--azul); transform: translateY(-3px); }
+    .modelo-num { position: absolute; top: 1.2rem; right: 1.6rem; font-family: 'DM Serif Display', serif; font-size: 4rem; color: rgba(0,51,160,0.05); line-height: 1; }
+    .modelo-tag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--azul); margin-bottom: 0.7rem; }
+    .modelo-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; margin-bottom: 0.8rem; }
+    .modelo-desc { font-size: 0.83rem; line-height: 1.7; color: #555; }
+    .steps { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .step { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.79rem; color: #444; }
+    .step-n { width: 18px; height: 18px; min-width: 18px; background: var(--azul); color: white; font-size: 0.58rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+
+    /* NOTEBOOKS */
+    .nb-grid { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nb-card { background: var(--oscuro); color: white; padding: 2.2rem; position: relative; }
+    .nb-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--acento), var(--azul-medio)); }
+    .nb-tag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acento); margin-bottom: 0.7rem; }
+    .nb-title { font-family: 'DM Serif Display', serif; font-size: 1.15rem; margin-bottom: 0.7rem; }
+    .nb-desc { font-size: 0.8rem; line-height: 1.7; color: rgba(255,255,255,0.5); }
+    .nb-pills { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); font-size: 0.68rem; color: rgba(255,255,255,0.55); padding: 0.16rem 0.5rem; }
+
+    /* USUARIOS */
+    .users-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.12); }
+    .user-card { background: rgba(0,0,0,0.1); padding: 2rem 1.8rem; transition: background 0.2s; }
+    .user-card:hover { background: rgba(0,0,0,0.22); }
+    .user-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .user-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: white; margin-bottom: 0.5rem; }
+    .user-desc { font-size: 0.8rem; color: rgba(255,255,255,0.48); line-height: 1.6; margin-bottom: 0.9rem; }
+    .user-apps { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
+    .user-app { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); font-size: 0.68rem; font-weight: 500; padding: 0.18rem 0.52rem; text-decoration: none; transition: background 0.2s; }
+    .user-app:hover { background: rgba(255,255,255,0.2); color: white; }
+    .user-casos { list-style: none; display: flex; flex-direction: column; gap: 0.32rem; }
+    .user-casos li { font-size: 0.74rem; color: rgba(255,255,255,0.36); padding-left: 0.75rem; position: relative; }
+    .user-casos li::before { content: '·'; position: absolute; left: 0; color: var(--acento); }
+
+    /* DOCUMENTACIÓN / DESCARGABLES */
+    .docs-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 1rem; }
+    .doc-item { display: flex; align-items: flex-start; gap: 1.2rem; padding: 1.4rem 1.6rem; background: var(--fondo); border-left: 3px solid var(--azul); transition: border-color 0.2s; }
+    .doc-item:hover { border-left-color: var(--acento); }
+    .doc-badge { background: var(--azul); color: white; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; white-space: nowrap; margin-top: 3px; }
+    .doc-badge.zip { background: #2E7D32; }
+    .doc-body { display: flex; flex-direction: column; gap: 0.2rem; }
+    .doc-name { font-weight: 600; font-size: 0.92rem; color: var(--oscuro); }
+    .doc-desc { font-size: 0.78rem; color: #666; line-height: 1.55; }
+    .doc-link { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem; font-size: 0.76rem; font-weight: 600; color: var(--azul); text-decoration: none; letter-spacing: 0.02em; transition: gap 0.2s; }
+    .doc-link:hover { gap: 0.55rem; }
+    .doc-link::after { content: '→'; }
+
+    /* FOOTER */
+    footer { background: var(--oscuro); padding: 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .foot-brand h3 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: white; margin-bottom: 0.5rem; }
+    .foot-brand p { font-size: 0.76rem; color: rgba(255,255,255,0.35); line-height: 1.7; }
+    .foot-col h4 { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+    .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .foot-col ul li a { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .foot-col ul li a:hover { color: white; }
+    .foot-bottom { grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.4rem; display: flex; justify-content: space-between; }
+    .foot-bottom span { font-size: 0.73rem; color: rgba(255,255,255,0.22); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .page-header { padding: 7rem 1.5rem 3rem; }
+      .section { padding: 3.5rem 1.5rem; }
+      .datasets-grid { grid-template-columns: 1fr 1fr; }
+      .modelos-grid, .nb-grid { grid-template-columns: 1fr; }
+      .users-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SIG<span>.</span>Madrid — <span style="font-size:0.85rem; opacity:0.6;">Documentación Técnica</span></div>
+  <a href="index.html" class="nav-back">Volver al inicio</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-tag">Documentación Técnica · Parte interna del proyecto</div>
+  <h1>Arquitectura, automatización<br>y gestión de usuarios</h1>
+  <p>Geodatabase GDB_Movilidad, modelos ModelBuilder, notebooks Python (ArcPy) y configuración de grupos en ArcGIS Online. Documentación completa y archivos descargables del proyecto.</p>
+</div>
+
+<!-- GEODATABASE -->
+<section class="section section-dark" id="geodatabase">
+  <div class="section-tag tag-gold">Modelo de datos</div>
+  <h2 class="section-title title-white">GDB_Movilidad — Geodatabase del proyecto</h2>
+  <p class="section-desc desc-muted">
+    La información se organiza en ocho feature datasets temáticos, cada uno con su propio
+    sistema de referencia de coordenadas, facilitando la gestión topológica y la publicación de servicios web.
+  </p>
+  <div class="datasets-grid">
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 01</div>
+      <div class="ds-name">Red Viaria</div>
+      <ul class="ds-layers">
+        <li>Carreteras (fuente OpenStreetMap)</li>
+        <li>Superficie</li>
+        <li>Pasos Elevados</li>
+        <li>Pasos Subterraneos</li>
+        <li>ND_Madrid — network dataset</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 02</div>
+      <div class="ds-name">ZBE</div>
+      <ul class="ds-layers">
+        <li>ZBEDEP Distrito Centro (límite, puntos control, viarios)</li>
+        <li>ZBEDEP Plaza Elíptica (límite, barrios residentes)</li>
+        <li>ZBE General (con y sin pegatina)</li>
+        <li>ZBE Merge Total · ZBE Pegatina Merge</li>
+        <li>Cámaras de control · Foto-rojos</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 03</div>
+      <div class="ds-name">Estacionamientos</div>
+      <ul class="ds-layers">
+        <li>SER Azul / Naranja / Verde / Rojo (polígono + punto)</li>
+        <li>Aparcamiento Alta Rotación</li>
+        <li>Aparcamientos (Garajes)</li>
+        <li>Aparcamientos Minusválido</li>
+        <li>Parkings Públicos ZBEDEP Centro</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 04</div>
+      <div class="ds-name">Seguridad Vial</div>
+      <ul class="ds-layers">
+        <li>Radares de Velocidad (fijos)</li>
+        <li>Tramos control velocidad media</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 05</div>
+      <div class="ds-name">Servicios</div>
+      <ul class="ds-layers">
+        <li>Gasolineras</li>
+        <li>Recarga Vehículos Eléctricos</li>
+        <li>Sitios Públicos</li>
+        <li>Elementos de Interés (turismo y cultura)</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 06</div>
+      <div class="ds-name">Capas_Accesibilidad_Aparcamiento</div>
+      <ul class="ds-layers">
+        <li>Aparcamientos (merge total)</li>
+        <li>Aparcamientos dentro de ZBE</li>
+        <li>Sin Aparcamientos dentro de ZBE</li>
+        <li>Zona de estudio de Aparcamiento</li>
+        <li>Ráster Densidad Kernel</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 07</div>
+      <div class="ds-name">Capas_Field_Maps</div>
+      <ul class="ds-layers">
+        <li>Accidentes</li>
+        <li>Peligros Generales</li>
+        <li>Policías</li>
+        <li>Radares</li>
+      </ul>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-num">Feature Dataset 08</div>
+      <div class="ds-name">Rutas_Punto_A_Punto_B</div>
+      <ul class="ds-layers">
+        <li>Rutas calculadas</li>
+        <li>Puntos de origen y destino</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODELBUILDER Y PYTHON -->
+<section class="section section-light" id="automatizacion">
+  <div class="section-tag tag-blue">Automatización</div>
+  <h2 class="section-title">ModelBuilder y Python (ArcPy)</h2>
+  <p class="section-desc desc-dark">Todos los procesos de construcción y análisis se automatizan mediante dos modelos ModelBuilder y dos notebooks de Python, garantizando reproducibilidad y escalabilidad del proyecto.</p>
+
+  <div class="modelos-grid">
+    <div class="modelo-card">
+      <div class="modelo-num">01</div>
+      <div class="modelo-tag">ModelBuilder · Modelo 1</div>
+      <div class="modelo-title">Infraestructura de datos y distribución de capas</div>
+      <p class="modelo-desc">Genera la estructura completa de la geodatabase e itera sobre las capas en bruto distribuyéndolas automáticamente en los ocho feature datasets correspondientes.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><span>Create File Geodatabase → GDB_Movilidad</span></div>
+        <div class="step"><div class="step-n">2</div><span>Create Feature Dataset × 8 datasets temáticos</span></div>
+        <div class="step"><div class="step-n">3</div><span>Iterate Feature Classes sobre datos raw</span></div>
+        <div class="step"><div class="step-n">4</div><span>Project + Add Field + Calculate Field</span></div>
+        <div class="step"><div class="step-n">5</div><span>If Field Value Is → Copy Features al dataset correcto</span></div>
+      </div>
+    </div>
+    <div class="modelo-card">
+      <div class="modelo-num">02</div>
+      <div class="modelo-tag">ModelBuilder · Modelo 2</div>
+      <div class="modelo-title">Análisis espacial de cobertura de estacionamientos</div>
+      <p class="modelo-desc">Identifica las áreas con y sin cobertura de estacionamiento dentro del ámbito ZBE y genera un ráster de densidad Kernel para visualizar la concentración de servicios.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><span>Merge → Servicios_Total (todas las capas parking)</span></div>
+        <div class="step"><div class="step-n">2</div><span>Buffer → Buffer_Servicios</span></div>
+        <div class="step"><div class="step-n">3</div><span>Dissolve → elimina solapamientos</span></div>
+        <div class="step"><div class="step-n">4</div><span>Clip por ZBE · Minimum Bounding Geometry</span></div>
+        <div class="step"><div class="step-n">5</div><span>Erase → zonas sin cobertura · Kernel Density → ráster</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nb-grid">
+    <div class="nb-card">
+      <div class="nb-tag">Python / ArcPy · Notebook 1</div>
+      <div class="nb-title">Construcción de la red viaria</div>
+      <p class="nb-desc">Automatiza la preparación de la capa de carreteras y la creación del network dataset ND_Madrid, desde la asignación de velocidades por fclass hasta la configuración del modelo de elevación por campos.</p>
+      <div class="nb-pills">
+        <span class="pill">UpdateCursor velocidades</span>
+        <span class="pill">CalculateGeometryAttributes</span>
+        <span class="pill">Jerarquía vial (4 niveles)</span>
+        <span class="pill">Split Superficie / Elevados / Subterráneos</span>
+        <span class="pill">Integrate topológico</span>
+        <span class="pill">CreateNetworkDataset</span>
+      </div>
+    </div>
+    <div class="nb-card">
+      <div class="nb-tag">Python / ArcPy · Notebook 2</div>
+      <div class="nb-title">Análisis de ruta con evaluación ZBE</div>
+      <p class="nb-desc">Calcula la ruta óptima entre origen y destino, evalúa si es válida para la etiqueta ambiental del vehículo (0, ECO, C, B o SIN etiqueta) y genera automáticamente una ruta alternativa con Polygon Barriers si la ruta no es válida.</p>
+      <div class="nb-pills">
+        <span class="pill">MakeRouteAnalysisLayer</span>
+        <span class="pill">Polygon Barriers ZBE</span>
+        <span class="pill">Intersect validación</span>
+        <span class="pill">Color_ZBE VERDE / ROJO</span>
+        <span class="pill">Ruta alternativa automática</span>
+        <span class="pill">5 etiquetas DGT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USUARIOS -->
+<section class="section section-blue" id="usuarios">
+  <div class="section-tag tag-gold">Gestión de usuarios y grupos</div>
+  <h2 class="section-title title-white">Perfiles de usuario en ArcGIS Online</h2>
+  <p class="section-desc desc-muted">
+    La organización de ArcGIS Online se ha estructurado en tres grupos que reflejan los perfiles
+    definidos en el proyecto, controlando el acceso a los contenidos y las aplicaciones de cada rol.
+  </p>
+  <div class="users-grid">
+
+    <div class="user-card">
+      <div class="user-icon">🔬</div>
+      <div class="user-name">Técnicos GIS</div>
+      <p class="user-desc">Profesionales con formación en SIG y gestión territorial. Acceso completo a todos los servicios, capas editables y herramientas de análisis. Tienen permisos para publicar y modificar contenidos.</p>
+      <div class="user-apps">
+        <a href="https://www.esri.com/es-es/arcgis/products/arcgis-pro/overview" target="_blank" class="user-app">ArcGIS Pro</a>
+        <a href="https://experience.arcgis.com" target="_blank" class="user-app">Experience Builder</a>
+      </div>
+      <ul class="user-casos">
+        <li>Actualización y validación de datos</li>
+        <li>Generación de informes espaciales</li>
+        <li>Seguimiento del estado de la red viaria</li>
+        <li>Publicación y modificación de servicios web</li>
+      </ul>
+    </div>
+
+    <div class="user-card">
+      <div class="user-icon">🏛️</div>
+      <div class="user-name">Gestores y Administración</div>
+      <p class="user-desc">Responsables institucionales de la gestión del tráfico y la planificación de infraestructuras. Acceso a Experience Builder y capas operativas en modo consulta. Sin permisos de edición.</p>
+      <div class="user-apps">
+        <a href="https://experience.arcgis.com" target="_blank" class="user-app">Experience Builder</a>
+      </div>
+      <ul class="user-casos">
+        <li>Capas operativas en modo lectura</li>
+        <li>Análisis de cobertura de servicios</li>
+        <li>Control de acceso a zonas de bajas emisiones</li>
+      </ul>
+    </div>
+
+    <div class="user-card">
+      <div class="user-icon">🧭</div>
+      <div class="user-name">Público General</div>
+      <p class="user-desc">Ciudadanos y turistas sin conocimientos técnicos. Acceden a través de aplicaciones públicas diseñadas para ser autoexplicativas: QuickCapture para reportar incidencias en un toque, y Experience Builder y StoryMaps para consultar y planificar desplazamientos.</p>
+      <div class="user-apps">
+        <a href="https://storymaps.arcgis.com" target="_blank" class="user-app">StoryMaps</a>
+        <a href="https://experience.arcgis.com" target="_blank" class="user-app">Experience Builder</a>
+        <a href="https://www.esri.com/es-es/arcgis/products/arcgis-quickcapture/overview" target="_blank" class="user-app">QuickCapture</a>
+      </div>
+      <ul class="user-casos">
+        <li>Planificar rutas y consultar restricciones ZBE según etiqueta DGT</li>
+        <li>Localizar gasolineras, puntos de recarga y aparcamientos en ruta</li>
+        <li>Descubrir puntos de interés turístico accesibles desde el itinerario</li>
+        <li>Reportar radares, accidentes y peligros con un único toque (QuickCapture)</li>
+        <li>Entender el proyecto y sus funcionalidades a través del StoryMap</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- DOCUMENTACIÓN Y DESCARGABLES -->
+<section class="section section-fondo" id="documentacion">
+  <div class="section-tag tag-blue">Entregables técnicos</div>
+  <h2 class="section-title">Documentación y archivos del proyecto</h2>
+  <p class="section-desc desc-dark">Descarga la documentación oficial del proyecto y los archivos técnicos necesarios para replicar o revisar el trabajo realizado.</p>
+
+  <div class="docs-grid">
+
+    <div class="doc-item">
+        <span class="doc-badge">ArcGIS Online</span>
+        <div class="doc-body">
+          <div class="doc-name">Portal del proyecto en ArcGIS Online</div>
+          <div class="doc-desc">Accede a la organización de ArcGIS Online con todas las capas publicadas, servicios web y aplicaciones del proyecto.</div>
+          <a href="#" class="doc-link">Pinche aquí para acceder</a>
+        </div>
+      </div>
+
+    <div class="doc-item">
+      <span class="doc-badge">PDF</span>
+      <div class="doc-body">
+        <div class="doc-name">Documentación oficial del proyecto (TFM)</div>
+        <div class="doc-desc">Memoria completa del Proyecto Final de Máster. Incluye introducción, planteamiento del problema, objetivos, material y métodos, resultados y conclusiones. Formato PDF siguiendo la plantilla oficial del Máster GIS Online de Esri España.</div>
+        <a href="#" class="doc-link">Descargar documentación</a>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <span class="doc-badge zip">ZIP</span>
+      <div class="doc-body">
+        <div class="doc-name">Archivos del proyecto — Geodatabase, Modelos y Notebooks</div>
+        <div class="doc-desc">Archivo comprimido con todos los elementos técnicos del proyecto: GDB_Movilidad (geodatabase completa), Modelo 1 y Modelo 2 de ModelBuilder (.atbx), Notebook 1 y Notebook 2 de Python (.ipynb), y capas de datos fuente.</div>
+        <a href="#" class="doc-link">Descargar ZIP del proyecto</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-brand">
+    <h3>SIG Movilidad Urbana — Documentación Técnica</h3>
+    <p>Proyecto Final de Máster (TFM) desarrollado en colaboración con Esri España.<br>
+    Máster GIS Online · Andrés Paredes Fernández · andres.paredes@esri.es</p>
+  </div>
+  <div class="foot-col">
+    <h4>En esta página</h4>
+    <ul>
+      <li><a href="#geodatabase">Geodatabase</a></li>
+      <li><a href="#automatizacion">ModelBuilder y Python</a></li>
+      <li><a href="#usuarios">Perfiles de usuario</a></li>
+      <li><a href="#documentacion">Documentación y ZIP</a></li>
+    </ul>
+  </div>
+  <div class="foot-col">
+    <h4>Navegación</h4>
+    <ul>
+      <li><a href="index.html">← Volver al inicio</a></li>
+      <li><a href="index.html#herramientas">Herramientas</a></li>
+      <li><a href="index.html#funcionalidades">Funcionalidades</a></li>
+      <li><a href="index.html#entregables">Entregables</a></li>
+    </ul>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Andrés Paredes Fernández · Máster GIS Online · Esri España</span>
+    <span>Datos: datos.madrid.es · OpenStreetMap</span>
+  </div>
+</footer>
+
+</body>
+</html>

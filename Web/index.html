@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIG Movilidad Urbana — Comunidad de Madrid</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #0033A0;
+      --azul-medio: #1A56C4;
+      --acento: #E8C84A;
+      --oscuro: #0D0D1A;
+      --fondo: #F5F3EE;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--fondo); color: var(--oscuro); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(245,243,238,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,51,160,0.1);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--azul); letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.78rem; font-weight: 500; color: var(--oscuro); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--azul); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 6rem 3rem 3rem; gap: 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(0,51,160,0.05) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,16,46,0.04) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(0,51,160,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,51,160,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--azul);
+      border: 1px solid var(--azul); padding: 0.3rem 0.8rem; margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif; font-size: clamp(2.6rem, 4.5vw, 4rem);
+      line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero h1 em { font-style: italic; color: var(--azul); }
+    .hero-desc { font-size: 1rem; font-weight: 300; line-height: 1.75; color: #444; max-width: 480px; margin-bottom: 2.5rem; animation: fadeUp 0.8s 0.2s ease both; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
+    .btn-primary { background: var(--azul); color: white; padding: 0.8rem 1.8rem; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+    .btn-primary:hover { background: var(--azul-medio); transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--oscuro); padding: 0.8rem 1.8rem; font-size: 0.88rem; font-weight: 500; border: 1.5px solid var(--oscuro); text-decoration: none; transition: all 0.2s; display: inline-block; }
+    .btn-ghost:hover { background: var(--oscuro); color: white; }
+
+    .hero-visual { position: relative; z-index: 1; animation: fadeIn 1s 0.4s ease both; }
+    .hero-card {
+      background: var(--azul); padding: 2.5rem; aspect-ratio: 4/3;
+      position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='200' cy='150' r='120' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3Ccircle cx='200' cy='150' r='80' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3Cpath d='M80 80 L140 120 L200 90 L280 130 L320 100' fill='none' stroke='rgba(232,200,74,0.6)' stroke-width='2'/%3E%3Cpath d='M60 160 L120 150 L180 170 L240 155 L300 175 L360 160' fill='none' stroke='rgba(255,255,255,0.25)' stroke-width='1.5'/%3E%3Ccircle cx='200' cy='150' r='6' fill='%23E8C84A'/%3E%3Ccircle cx='140' cy='120' r='4' fill='rgba(255,255,255,0.6)'/%3E%3Ccircle cx='280' cy='130' r='4' fill='rgba(200,16,46,0.8)'/%3E%3C/svg%3E") center/cover;
+    }
+    .card-badges { position: absolute; top: 1.5rem; right: 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 0.68rem; font-weight: 500; padding: 0.2rem 0.6rem; backdrop-filter: blur(4px); }
+    .card-label { color: var(--acento); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .card-title { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: white; }
+
+    /* SECTIONS */
+    .section { padding: 6rem 3rem; }
+    .section-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--azul); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.9rem, 3.2vw, 2.8rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.2rem; }
+    .section-desc { font-size: 0.98rem; font-weight: 300; line-height: 1.75; color: #555; max-width: 600px; }
+
+    /* SOBRE */
+    .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(0,51,160,0.1); }
+    .about-block { background: var(--fondo); padding: 1.8rem; transition: background 0.2s; }
+    .about-block:hover { background: white; }
+    .about-icon { font-size: 1.6rem; margin-bottom: 0.7rem; }
+    .about-block h4 { font-family: 'DM Serif Display', serif; font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .about-block p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+
+    /* HERRAMIENTAS */
+    .tools-bg { background: var(--oscuro); }
+    .tools-bg .section-title { color: white; }
+    .tools-bg .section-desc { color: rgba(255,255,255,0.45); }
+    .tools-bg .section-tag { color: var(--acento); }
+    .tools-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: rgba(255,255,255,0.06); }
+    .tool-card { background: rgba(255,255,255,0.025); padding: 2rem 1.8rem; border-top: 3px solid transparent; transition: all 0.25s; display: flex; flex-direction: column; }
+    .tool-card:hover { background: rgba(255,255,255,0.07); border-top-color: var(--acento); }
+    .tool-cat { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--acento); margin-bottom: 0.7rem; }
+    .tool-icon { font-size: 1.9rem; margin-bottom: 0.7rem; }
+    .tool-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: white; margin-bottom: 0.5rem; }
+    .tool-desc { font-size: 0.8rem; color: rgba(255,255,255,0.42); line-height: 1.65; flex-grow: 1; }
+    .tool-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.2rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--acento); text-decoration: none; border-bottom: 1px solid rgba(232,200,74,0.25); padding-bottom: 0.1rem; transition: border-color 0.2s, gap 0.2s; align-self: flex-start; }
+    .tool-link:hover { border-bottom-color: var(--acento); gap: 0.7rem; }
+    .tool-link::after { content: '→'; }
+
+    /* FUNCIONALIDADES */
+    .func-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .func-card { padding: 1.8rem; background: var(--fondo); border-bottom: 3px solid transparent; transition: all 0.2s; }
+    .func-card:hover { background: white; border-bottom-color: var(--azul); }
+    .func-icon { font-size: 1.8rem; margin-bottom: 0.9rem; }
+    .func-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .func-desc { font-size: 0.8rem; line-height: 1.65; color: #666; }
+
+    /* ── JUSTIFICACION ── */
+    .justif-bg {
+      background: linear-gradient(135deg, var(--oscuro) 0%, #0a1628 100%);
+      color: white;
+    }
+    .justif-bg .section-title { color: white; }
+    .justif-bg .section-tag { color: var(--acento); }
+    .justif-content {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center;
+    }
+    .justif-text p {
+      font-size: 0.95rem; line-height: 1.8;
+      color: rgba(255,255,255,0.6); margin-bottom: 1.2rem;
+    }
+    .justif-pillars {
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .pillar {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .pillar:hover { background: rgba(255,255,255,0.08); }
+    .pillar-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; color: var(--acento);
+      line-height: 1; min-width: 40px;
+    }
+    .pillar-text h4 {
+      font-weight: 500; font-size: 0.95rem; margin-bottom: 0.2rem;
+    }
+    .pillar-text p {
+      font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0; line-height: 1.5;
+    }
+
+    /* ENTREGABLES */
+    .pub-bg { background: white; }
+    .pub-layout { margin-top: 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
+    .pub-info h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 1rem; }
+    .pub-info p { font-size: 0.88rem; line-height: 1.75; color: #555; margin-bottom: 1rem; }
+    .capas-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .capa { display: flex; align-items: flex-start; gap: 1.1rem; padding: 1.2rem 1.4rem; background: var(--fondo); border-left: 3px solid var(--azul); transition: border-color 0.2s; }
+    .capa:hover { border-left-color: var(--acento); }
+    .capa-tipo { background: var(--azul); color: white; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.18rem 0.5rem; white-space: nowrap; margin-top: 3px; }
+    .capa-body { display: flex; flex-direction: column; gap: 0.2rem; }
+    .capa-name { font-weight: 600; font-size: 0.9rem; color: var(--oscuro); }
+    .capa-desc { font-size: 0.78rem; color: #666; line-height: 1.55; }
+    .capa-link { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem; font-size: 0.76rem; font-weight: 600; color: var(--azul); text-decoration: none; letter-spacing: 0.03em; transition: gap 0.2s; }
+    .capa-link:hover { gap: 0.5rem; }
+    .capa-link::after { content: '→'; }
+
+    /* banner técnico */
+    .tecnico-banner {
+      background: var(--oscuro); color: white;
+      padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+      border-top: 3px solid var(--acento);
+    }
+    .tecnico-banner-text h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .tecnico-banner-text p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+    .btn-tecnico { background: var(--acento); color: var(--oscuro); padding: 0.75rem 1.6rem; font-size: 0.85rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: opacity 0.2s, transform 0.15s; display: inline-block; }
+    .btn-tecnico:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: var(--oscuro); padding: 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .foot-brand h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: white; margin-bottom: 0.5rem; }
+    .foot-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.7; }
+    .foot-col h4 { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 1rem; }
+    .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .foot-col ul li a { font-size: 0.8rem; color: rgba(255,255,255,0.32); text-decoration: none; transition: color 0.2s; }
+    .foot-col ul li a:hover { color: white; }
+    .foot-bottom { grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.4rem; display: flex; justify-content: space-between; }
+    .foot-bottom span { font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+
+    /* STORYMAP */
+    .storymap-bg {
+      background: linear-gradient(160deg, #f0f4ff 0%, var(--fondo) 60%);
+      border-top: 1px solid rgba(0,51,160,0.08);
+    }
+    .storymap-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+      margin-top: 3rem;
+    }
+    .storymap-preview {
+      position: relative;
+    }
+    .storymap-frame {
+      background: var(--azul); aspect-ratio: 16/10;
+      position: relative; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,51,160,0.18);
+    }
+    .storymap-frame::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%),
+        url("data:image/svg+xml,%3Csvg width='600' height='375' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='375' fill='%230033A0'/%3E%3Ccircle cx='300' cy='180' r='160' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3Ccircle cx='300' cy='180' r='100' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3Cpath d='M60 200 Q150 140 220 180 Q290 220 360 160 Q430 100 540 150' fill='none' stroke='%23E8C84A' stroke-width='2.5'/%3E%3Cpath d='M60 230 Q160 200 260 220 Q360 240 460 210 Q520 195 540 200' fill='none' stroke='rgba(255,255,255,0.2)' stroke-width='1.5'/%3E%3Ccircle cx='220' cy='180' r='7' fill='%23E8C84A'/%3E%3Ccircle cx='360' cy='160' r='7' fill='rgba(200,16,46,0.9)'/%3E%3Ccircle cx='300' cy='180' r='4' fill='rgba(255,255,255,0.5)'/%3E%3C/svg%3E") center/cover;
+    }
+    .storymap-frame-label {
+      position: absolute; bottom: 1.2rem; left: 1.5rem; right: 1.5rem;
+      z-index: 2;
+    }
+    .storymap-frame-tag {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--acento); margin-bottom: 0.3rem;
+    }
+    .storymap-frame-title {
+      font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: white; line-height: 1.2;
+    }
+    .sm-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(232,200,74,0.15); border: 1px solid rgba(232,200,74,0.35);
+      color: var(--acento); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem;
+      backdrop-filter: blur(4px);
+    }
+    .storymap-content {}
+    .storymap-chapitres {
+      display: flex; flex-direction: column; gap: 0; margin: 2rem 0;
+      border: 1px solid rgba(0,51,160,0.1);
+    }
+    .sm-chapter {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1rem 1.2rem; border-bottom: 1px solid rgba(0,51,160,0.07);
+      transition: background 0.15s; cursor: default;
+    }
+    .sm-chapter:last-child { border-bottom: none; }
+    .sm-chapter:hover { background: rgba(0,51,160,0.03); }
+    .sm-chapter-num {
+      font-family: 'DM Serif Display', serif; font-size: 1.1rem;
+      color: var(--azul); opacity: 0.35; min-width: 28px; line-height: 1.2;
+    }
+    .sm-chapter-body {}
+    .sm-chapter-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.15rem; }
+    .sm-chapter-desc { font-size: 0.76rem; color: #777; line-height: 1.5; }
+    .btn-storymap {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: var(--azul); color: white;
+      padding: 0.9rem 2rem; font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-storymap:hover { background: var(--azul-medio); transform: translateY(-2px); }
+    .btn-storymap::after { content: '→'; font-size: 1rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 2rem; }
+      .hero-visual { display: none; }
+      .section { padding: 3.5rem 1.5rem; }
+      .about-layout, .pub-layout, .storymap-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .tools-grid, .func-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+      .tecnico-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SIG<span>.</span>Madrid</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Proyecto</a></li>
+    <li><a href="#herramientas">Herramientas</a></li>
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#storymap">StoryMap</a></li>
+    <li><a href="#entregables">Entregables</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-text">
+    <div class="hero-tag">Máster GIS Online · Proyecto Final · Esri España</div>
+    <h1>SIG de Movilidad Urbana en la <em>Comunidad de Madrid</em></h1>
+    <p class="hero-desc">
+      Sistema de información geográfica que integra la red viaria, servicios de movilidad
+      y Zonas de Bajas Emisiones, ofreciendo herramientas de análisis y aplicaciones
+      interactivas para técnicos GIS, gestores y ciudadanos.
+    </p>
+    <div class="hero-ctas">
+      <a href="#sobre" class="btn-primary">Explorar el proyecto</a>
+      <a href="#herramientas" class="btn-ghost">Ver herramientas</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="card-badges">
+        <div class="badge">ArcGIS Pro</div>
+        <div class="badge">ArcGIS Online</div>
+        <div class="badge">Python / ArcPy</div>
+      </div>
+      <div class="card-label">Red viaria · ZBE · Servicios</div>
+      <div class="card-title">Comunidad de Madrid</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE EL PROYECTO -->
+<section class="section" id="sobre">
+  <div class="about-layout">
+    <div>
+      <div class="section-tag">Sobre el proyecto</div>
+      <h2 class="section-title">Movilidad urbana inteligente, datos integrados</h2>
+      <p class="section-desc">
+        La Comunidad de Madrid concentra una red viaria densa y una gran variedad de servicios
+        asociados a la movilidad. Sin embargo, esta información se encuentra dispersa en múltiples
+        fuentes y formatos, lo que dificulta su integración y explotación conjunta.
+      </p>
+      <br>
+      <p class="section-desc">
+        Este proyecto centraliza toda esa información en un entorno unificado sobre la plataforma
+        ArcGIS de Esri, incorporando las restricciones de las Zonas de Bajas Emisiones (ZBE)
+        para evaluar la accesibilidad en función del tipo de vehículo y su etiqueta ambiental DGT.
+      </p>
+    </div>
+    <div class="about-blocks">
+      <div class="about-block">
+        <div class="about-icon">🗺️</div>
+        <h4>Red Viaria</h4>
+        <p>Network dataset ND_Madrid con modos de conducción y peatonal, jerarquía vial y tiempos de coste.</p>
+      </div>
+      <div class="about-block">
+        <div class="about-icon">🚫</div>
+        <h4>Zonas ZBE</h4>
+        <p>ZBEDEP Distrito Centro, ZBEDEP Plaza Elíptica y ZBE de acceso general con sus restricciones.</p>
+      </div>
+      <div class="about-block">
+        <div class="about-icon">🅿️</div>
+        <h4>Estacionamientos</h4>
+        <p>Sistema SER completo (azul, naranja, verde, rojo), aparcamientos públicos y alta rotación.</p>
+      </div>
+      <div class="about-block">
+        <div class="about-icon">⚡</div>
+        <h4>Servicios</h4>
+        <p>Gasolineras, puntos de recarga eléctrica, radares de velocidad y elementos de interés turístico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERRAMIENTAS -->
+<section class="section tools-bg" id="herramientas">
+  <div class="section-tag">Ecosistema ArcGIS</div>
+  <h2 class="section-title">Herramientas y aplicaciones del proyecto</h2>
+  <p class="section-desc">
+    El proyecto se apoya en el ecosistema completo de Esri, desde el análisis de escritorio
+    hasta las aplicaciones web interactivas y la captura móvil en campo.
+    Accede a cada herramienta directamente desde los enlaces.
+  </p>
+  <div class="tools-grid">
+
+    <div class="tool-card">
+      <div class="tool-cat">Desktop</div>
+      <div class="tool-icon">🖥️</div>
+      <div class="tool-name">ArcGIS Pro</div>
+      <p class="tool-desc">Software de escritorio principal. Usado para construir la geodatabase GDB_Movilidad, crear el network dataset ND_Madrid, ejecutar los modelos ModelBuilder y los notebooks Python con ArcPy.</p>
+      <a href="https://www.esri.com/es-es/arcgis/products/arcgis-pro/overview" target="_blank" class="tool-link">Más información</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-cat">Nube</div>
+      <div class="tool-icon">🌐</div>
+      <div class="tool-name">ArcGIS Online</div>
+      <p class="tool-desc">Plataforma en la nube donde se publican y comparten todos los servicios web del proyecto: feature layers editables, tile layers y vector tile layers. Portal centralizado de acceso para todos los perfiles.</p>
+      <a href="https://www.arcgis.com" target="_blank" class="tool-link">Abrir ArcGIS Online</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-cat">Aplicación web</div>
+      <div class="tool-icon">🧩</div>
+      <div class="tool-name">Experience Builder</div>
+      <p class="tool-desc">Herramienta no-code para diseñar aplicaciones web interactivas con múltiples widgets, mapas, filtros y tablas. Destinada a técnicos GIS y gestores para consulta y análisis de la movilidad de Madrid.</p>
+      <a href="https://experience.arcgis.com" target="_blank" class="tool-link">Abrir Experience Builder</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-cat">Narrativa</div>
+      <div class="tool-icon">📖</div>
+      <div class="tool-name">ArcGIS StoryMaps</div>
+      <p class="tool-desc">Plataforma para crear narrativas interactivas combinando mapas, texto e imágenes. Comunica los resultados del proyecto y las funcionalidades del sistema al público general y ciudadanos de Madrid.</p>
+      <a href="https://storymaps.arcgis.com" target="_blank" class="tool-link">Abrir StoryMaps</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-cat">Móvil — Campo</div>
+      <div class="tool-icon">📱</div>
+      <div class="tool-name">ArcGIS Field Maps</div>
+      <p class="tool-desc">Aplicación móvil para captura y actualización de datos en campo. Permite registrar y editar elementos como radares, gasolineras o puntos de recarga directamente sobre los feature layers publicados.</p>
+      <a href="https://www.esri.com/es-es/arcgis/products/arcgis-field-maps/overview" target="_blank" class="tool-link">Más información</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-cat">Móvil — Ciudadanos</div>
+      <div class="tool-icon">📸</div>
+      <div class="tool-name">ArcGIS QuickCapture</div>
+      <p class="tool-desc">Aplicación móvil de captura ultrarrápida para el ciudadano. Con un solo toque registra la posición GPS y el tipo de incidencia: radar no registrado, obstáculo en calzada, accidente o peligro general. Sin formularios extensos, sin conocimientos técnicos.</p>
+      <a href="https://www.esri.com/es-es/arcgis/products/arcgis-quickcapture/overview" target="_blank" class="tool-link">Más información</a>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-cat">Automatización</div>
+      <div class="tool-icon">🐍</div>
+      <div class="tool-name">Python / ArcPy</div>
+      <p class="tool-desc">Librería de Python para automatizar geoprocesos en ArcGIS Pro. El Notebook 1 construye la red viaria y el Notebook 2 implementa el análisis de rutas con evaluación de restricciones ZBE por etiqueta ambiental DGT.</p>
+      <a href="https://pro.arcgis.com/es/pro-app/latest/arcpy/get-started/what-is-arcpy-.htm" target="_blank" class="tool-link">Documentación ArcPy</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section class="section" id="funcionalidades">
+  <div class="section-tag">Funcionalidades</div>
+  <h2 class="section-title">¿Qué permite hacer el sistema?</h2>
+  <p class="section-desc">El sistema integrado ofrece las siguientes funcionalidades tanto para técnicos GIS como para el ciudadano final.</p>
+  <div class="func-grid">
+    <div class="func-card">
+      <div class="func-icon">🔀</div>
+      <div class="func-title">Evaluación de rutas</div>
+      <p class="func-desc">Cálculo de itinerarios óptimos considerando los servicios disponibles a lo largo del recorrido y los tiempos de coste reales de la red viaria.</p>
+    </div>
+    <div class="func-card">
+      <div class="func-icon">🚗</div>
+      <div class="func-title">Restricciones ZBE</div>
+      <p class="func-desc">Validación automática de si un vehículo puede circular por las ZBE según su etiqueta DGT, con cálculo de ruta alternativa en caso de restricción.</p>
+    </div>
+    <div class="func-card">
+      <div class="func-icon">🅿️</div>
+      <div class="func-title">Localización de aparcamiento</div>
+      <p class="func-desc">Análisis de cobertura de estacionamientos en el entorno del destino, filtrando por tipo, zona SER y disponibilidad.</p>
+    </div>
+    <div class="func-card">
+      <div class="func-icon">⚡</div>
+      <div class="func-title">Servicios en ruta</div>
+      <p class="func-desc">Identificación de gasolineras y puntos de recarga eléctrica disponibles en el entorno del itinerario planificado.</p>
+    </div>
+    <div class="func-card">
+      <div class="func-icon">🗺️</div>
+      <div class="func-title">Análisis de densidad</div>
+      <p class="func-desc">Ráster de densidad Kernel de estacionamientos para identificar zonas con mayor y menor concentración de servicios dentro del ámbito ZBE.</p>
+    </div>
+    <div class="func-card">
+      <div class="func-icon">🏛️</div>
+      <div class="func-title">Itinerarios turísticos</div>
+      <p class="func-desc">Planificación de rutas optimizadas combinando criterios de accesibilidad, restricciones ZBE y puntos de interés turístico y cultural.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORYMAP -->
+<section class="section storymap-bg" id="storymap">
+  <div class="section-tag">Historia del proyecto</div>
+  <h2 class="section-title">¿Por qué este proyecto? Léelo en el StoryMap</h2>
+  <p class="section-desc">El StoryMap recoge en formato narrativo el origen del proyecto, la problemática que lo justifica, cómo funciona el sistema y qué puede hacer con él cada tipo de usuario. Está pensado para cualquier persona, sin conocimientos técnicos previos.</p>
+
+  <div class="storymap-layout">
+
+    <div class="storymap-preview">
+      <div class="storymap-frame">
+        <div class="sm-badge">ArcGIS StoryMaps</div>
+        <div class="storymap-frame-label">
+          <div class="storymap-frame-tag">Historia interactiva</div>
+          <div class="storymap-frame-title">SIG de Movilidad Urbana<br>en la Comunidad de Madrid</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="storymap-content">
+      <div class="storymap-chapitres">
+        <div class="sm-chapter">
+          <div class="sm-chapter-num">01</div>
+          <div class="sm-chapter-body">
+            <div class="sm-chapter-title">El problema: movilidad fragmentada</div>
+            <div class="sm-chapter-desc">¿Por qué es difícil planificar un desplazamiento en Madrid? Las ZBE, los aparcamientos, las recargas… cada cosa en un sitio diferente.</div>
+          </div>
+        </div>
+        <div class="sm-chapter">
+          <div class="sm-chapter-num">02</div>
+          <div class="sm-chapter-body">
+            <div class="sm-chapter-title">La solución: un sistema integrado</div>
+            <div class="sm-chapter-desc">Cómo un SIG puede unificar toda esa información y hacerla útil tanto para el ciudadano como para el técnico.</div>
+          </div>
+        </div>
+        <div class="sm-chapter">
+          <div class="sm-chapter-num">03</div>
+          <div class="sm-chapter-body">
+            <div class="sm-chapter-title">Los datos y la geodatabase</div>
+            <div class="sm-chapter-desc">Todas las fuentes utilizadas son abiertas (datos.madrid.es, OSM). El proyecto es reproducible por cualquier técnico.</div>
+          </div>
+        </div>
+        <div class="sm-chapter">
+          <div class="sm-chapter-num">04</div>
+          <div class="sm-chapter-body">
+            <div class="sm-chapter-title">¿Puede mi coche entrar en la ZBE?</div>
+            <div class="sm-chapter-desc">El caso de uso central: introduce tu origen, destino y etiqueta DGT, y el sistema calcula si puedes circular y, si no, te propone una ruta alternativa.</div>
+          </div>
+        </div>
+        <div class="sm-chapter">
+          <div class="sm-chapter-num">05</div>
+          <div class="sm-chapter-body">
+            <div class="sm-chapter-title">Aplicaciones para cada perfil</div>
+            <div class="sm-chapter-desc">Field Maps para técnicos y agentes, QuickCapture para ciudadanos, Experience Builder para todos.</div>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="btn-storymap">Abrir el StoryMap</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- JUSTIFICACIÓN -->
+  <section class="section justif-bg" id="justificacion">
+    <div class="justif-content">
+      <div class="justif-text">
+        <div class="section-tag">Justificación</div>
+        <h2 class="section-title" style="color:white;">¿Por qué este proyecto?</h2>
+        <p>La transformación hacia modelos de movilidad más sostenibles avanza a un ritmo que no siempre va acompañado de las herramientas necesarias para que ciudadanos, técnicos y gestores puedan navegar esa transición con información suficiente.</p>
+        <p>Las restricciones de acceso por etiqueta ambiental, la diversificación de los modos de transporte y la multiplicación de los puntos de recarga eléctrica son fenómenos recientes que requieren una respuesta territorial coordinada.</p>
+        <p>El uso de tecnologías GIS permite no solo visualizar esta información de forma clara y accesible, sino analizarla en profundidad, cruzando múltiples variables espaciales en un entorno unificado.</p>
+      </div>
+      <div class="justif-pillars">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-text">
+            <h4>Reproducibilidad</h4>
+            <p>Todos los datos proceden de fuentes abiertas (datos.madrid.es, OSM). Cualquier técnico puede replicar el proyecto.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-text">
+            <h4>Escalabilidad</h4>
+            <p>El enfoque metodológico es replicable en otros entornos metropolitanos con características similares.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-text">
+            <h4>Accesibilidad</h4>
+            <p>Solución útil en dos planos: análisis técnico avanzado y planificación de desplazamientos para el ciudadano.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">04</div>
+          <div class="pillar-text">
+            <h4>Plataforma completa</h4>
+            <p>El ecosistema ArcGIS cubre desde el escritorio hasta aplicaciones móviles y dashboards web.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- BANNER TÉCNICO -->
+<div class="tecnico-banner">
+  <div class="tecnico-banner-text">
+    <h3>¿Quieres ver la parte técnica del proyecto?</h3>
+    <p>Geodatabase detallada, modelos ModelBuilder, notebooks Python y perfiles de usuario de ArcGIS Online.</p>
+  </div>
+  <a href="tecnico.html" target="_blanck" class="btn-tecnico">Ver documentación técnica →</a>
+</div>
+
+<!-- ENTREGABLES -->
+<section class="section pub-bg" id="entregables">
+  <div class="section-tag">Proyecto Final</div>
+  <div class="pub-layout">
+    <div class="pub-info">
+      <h2 class="section-title">Elementos del proyecto</h2>
+      <p>En este apartado están disponibles todos los enlaces a los distintos elementos del proyecto. Accede directamente a la plataforma, a la aplicación interactiva o descarga los archivos del proyecto.</p>
+    </div>
+    <div class="capas-list">
+
+      <div class="capa">
+        <span class="capa-tipo">Experience Builder</span>
+        <div class="capa-body">
+          <div class="capa-name">Aplicación interactiva — Crea tu ruta por Madrid</div>
+          <div class="capa-desc">Accede al Experience Builder del proyecto para planificar tu ruta, consultar restricciones ZBE y localizar servicios de movilidad en Madrid.</div>
+          <a href="#" class="capa-link">Pinche aquí para acceder</a>
+        </div>
+      </div>
+
+      <div class="capa">
+        <span class="capa-tipo">StoryMaps</span>
+        <div class="capa-body">
+          <div class="capa-name">Historia del proyecto — ¿Por qué este SIG?</div>
+          <div class="capa-desc">Narrativa interactiva que explica el origen del proyecto, la problemática de movilidad en Madrid, cómo funciona el sistema y qué puede hacer con él cada tipo de usuario.</div>
+          <a href="#storymap" class="capa-link">Ver el StoryMap</a>
+        </div>
+      </div>
+
+      <div class="capa">
+        <span class="capa-tipo">QuickCapture</span>
+        <div class="capa-body">
+          <div class="capa-name">Reporte ciudadano — Incidencias en un toque</div>
+          <div class="capa-desc">Disponible para cualquier ciudadano. Reporta radares, obstáculos, accidentes o peligros en calzada con un único toque. El GPS captura la posición automáticamente, sin formularios ni conocimientos técnicos.</div>
+          <div style="display:flex; align-items:center; gap:1.2rem; margin-top:0.9rem;">
+            <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCADBAMIDASIAAhEBAxEB/8QAHQAAAgMBAQEBAQAAAAAAAAAAAAgGBwkFAwQCAf/EAFAQAAAEBQEDBA0GDAUFAAMAAAECAwQABQYHERIIEyEUFRgxFhc3OEFRVnWUlbTS0wkyV2GEsiI1VWdxc3aBpbPU5CMlJ1OhJCYzVJFCYmP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Ab6dzaVSOVrTSdzNlLGCGneuni5UUk9RgKGo5hAAyYQAMj1iARGe2xaz6S6M9etvfiGbbXexVd9i9tQjPm2Nu6suTOXMopCXEfPGzcXKpDuE0gBMDFLnJxAB4mDhAac9ti1n0l0Z69be/B22LWfSXRnr1t78IT0U74eSrb1o2+JB0U74eSrb1o2+JAPt22LWfSXRnr1t78HbYtZ9JdGevW3vwhPRTvh5KtvWjb4kHRTvh5KtvWjb4kA+3bYtZ9JdGevW3vxLHj1myl60xeO0GzJBIyyzhVQCJpplDUY5jDwAoAAiIjwAIx6ncteSacvpRMEwSeMXCjZwQDAYCqEMJTBkOA4EB4hGr1wpU+n1m6ikcsSBZ/MaectGyYnAoHVUbmIQMjwDIiHEeEB6yq5Fu5tMUJdKq9pZ+9cG0It203QUVUN4ilKcREfqCJTGfNsrKXGtVXsnuJW8kSl1OSFwDuYuiPUVjJJAAgIgRMwmNxEOAAIw39tb323uLUCkhpKdrPpgm3M5MmZkskAJlEpRHJygHWYvD64CZ1JUdPUyzTeVHPpXJmyqm6TWfu025DnwI6QMcQARwAjj6hjxpmrqUqgy5aaqeSTszcCiuEvfpOBSA2dOrQYdOcDjPXgYXj5SHuR0/5+J7OtEM+TP/ABnXX6lj95eAdSI5P69oanpiMun9aU5KXpSgcW72aIoKgUeodJzAOB8cR25t67c23nyEjq+dqsX67UrtNMjJZUBSMY5AHJCiHWQ3Dr4Qqt87f1Vf+vVbiWsl5JzTizdJoR0q4I1MKqQYOGhUSm4CIccYGAbztsWs+kujPXrb34O2xaz6S6M9etvfhCeinfDyVbetG3xIOinfDyVbetG3xIDSJ49ZspetMXjtBsyQSMss4VUAiaaZQ1GOYw8AKAAIiI8ACIn22LWfSXRnr1t78eN50zJWCrVI4YMSln5TB9YNTxlrSVPzWqqkY07I25XEyfqgk3SMoUgGNjONRhAA6vCMBqh22LWfSXRnr1t78HbYtZ9JdGevW3vwhPRTvh5KtvWjb4kHRTvh5KtvWjb4kA+3bYtZ9JdGevW3vwdti1n0l0Z69be/CE9FO+Hkq29aNviQdFO+Hkq29aNviQD7dti1n0l0Z69be/Emkk2lU8laM0kkzZTNgvq3TpmuVZJTSYSjpOURAcGAQHA9YCEZL3Eomo6AqQ9O1SyIymREiKmSKsRUAKYMlHUQRD/mND9iXvYqR+2+2rwFzQQQQFM7bXexVd9i9tQhb/k3u65UHmE/tCMMhttd7FV32L21CFv+Te7rlQeYT+0IwDY3svFSlo0JUtVDeaLFmZlSochRIoICmBRNq1HLj54Y6/DFadM2035Pqr0FL4sQz5TD8WUL+uffdQhKoDQjpm2m/J9VegpfFi+6PnzKqaVldSS0qxGczaJu0CrFApwIcoGDUACIAOB8Yxj5Gruzx3CKF8ws/wCUWAzNvF3XKy8/PvaDxrLK/wAWNf1JPuhGTV4u65WXn597QeNS6nnvYvbWaVNyXlfNEnWfcn3mje7pET6NWB0504zgcZ6hgPgvbTExrO1FRUvKTtyPpkzFFAzg4lTAwiA/hCACIBw8QxQ2yds911a25ripKkdSRVmpK1WhSs3Khz6zKJmDgZMoYwQfD4o9LV7XnZzcOS0j2veb+dHIIcp553u6yAjnRuC56urIQ00Ar3ykPcjp/wA/E9nWihtjq8VKWjeVMtVDeaLFmabYqHIUSKCApioJtWo5cfPDHX4YcnaQtH24qRl8g7IOY+Rvweb7kfKNeEzk06dZMfPznPg6oSLaYsP2mG0iW7KufedjrlxzfybdbsCD/uH1Z1/VjHhgLTunRk22rKgQuHbRRo0lEuaFkqxJycUFhXTOdYwlKmCgCTS4JgcgOQNw4ZGS21ubT2zPTBLXXCRmDqeIKnenUlKRVm+7WHJQAxzEHPDj+DFO7OO0h2nqHeUz2Gc98pmR33KOc+T6dSSRNGndHzjdZznw9XDjX9/rkdtW4atXczcz7xskhyblW/xoAQzr0F689WIByOmbab8n1V6Cl8WGBpyatp9T0tnjIqhWsxaJO0QUAAOBFCAcuoAEcDgQzxGMdobejts/sepGTSDtbcp5sYIM99z5o3m7TKTVp3A4zpzjI48YwDXX27iFefs3MfZlIzn2V++GorzkX7po0UvYrv7D1utp07yl35sZzjLVQYzr2V++GorzkX7poDRi8NyaftbSqVSVIi/VZqOyNClZpFOfWYpjBwMYoYwQfD4oqLpm2m/J9VegpfFg+UR7hDLz83/lLxnvAaEdM2035Pqr0FL4sW1Zq5tPXWphzUVNIzBJm3emZHK9SKmfeFIQ4iAFMYMYULxz44ydh/8A5OLuITn9pF/Zm0BQG333wzvza1+6MNlsS97FSP2321eFN2+++Gd+bWv3RhstiXvYqR+2+2rwFzQQQQFM7bXexVd9i9tQhb/k3u65UHmE/tCMMhttd7FV32L21CFv+Te7rlQeYT+0IwEz+Uw/FlC/rn33UISqNY7pWtom5qUvSrKVqPyS8yhmwEdKI6BPp1fMMGc6S9fiiDdFOx/ko59aOfiQGasau7PHcIoXzCz/AJRYhnRTsf5KufWjn4kW9TUml9O0/L5DKURQl8vbkbNkxOJxImQAKUMiIiPAOsYDKK8XdcrLz8+9oPGmV4u99rL9lH3sh4zNvF3XKy8/PvaDxpleLvfay/ZR97IeAzv2V++GorzkX7po1LjLTZX74aivORfumh4tsevaot1ahtPqSfkYzBSbItjKGQIqApmTVMIYOAh1lLx+qAumE8+Uw/FlC/rn33UI6Gxbei4lybhzeUVhOknzNtKTOUiEZopCCgLJlzkhQEeBh4Rz/lMPxZQv65991CASqCCCAcS2eyDTlWW8p+p3FYTZstNZcg8Oim3TEqYqEAwlAR4iAZhU63lCdP1pPJCisdZKWzFwzIocMGOCahiAYQDwjpzGouzx3CKF8ws/5RYzNvF3XKy8/PvaDwGmV4u99rL9lH3sh4zv2V++GorzkX7po0QvF3vtZfso+9kPGd+yv3w1Feci/dNAN38oj3CGXn5v/KXjPeNcblUFS9xafJIatYHfS9NwVyVMq50hBQoGKA5IID1GNw+uK46Kdj/JVz60c/EgM1Yf/wCTi7iE5/aRf2ZtEr6Kdj/JVz60c/EixbZW/pW28hXkdIS87Fgu6M7UTO4OqIqmKQgjk4iPUQvDq4QCIbfffDO/NrX7ow2WxL3sVI/bfbV4U3b774Z35ta/dGGy2Je9ipH7b7avAXNBBBAUzttd7FV32L21CM8re15Vlv5qvNKPnB5U8cIC3VVIkmoJkxMBtODlEOsoD+6NZKgk0pqCULyiey1pMpe4075q6SBRNTSYDFyUeA4MUB/SARE+01ab6N6V9Vpe7AIB0l74eXjn0Jt8ODpL3w8vHPoTb4cP/wBpq030b0r6rS92DtNWm+jelfVaXuwCAdJe+Hl459CbfDg6S98PLxz6E2+HD/8AaatN9G9K+q0vdg7TVpvo3pX1Wl7sBlZNpg8m01dzSYLCu8eLncOFRAAE6hzCYxsBwDIiI8I1TvF3vtZfso+9kPB2mrTfRvSvqtL3Y975lKSxtdEIUClLTUwAADqAOTKQGdGyv3w1Feci/dNDd/KI9whl5+b/AMpeFE2V++GorzkX7pobv5RHuEMvPzf+UvAUz8m93XKg8wn9oRiZ/KYfiyhf1z77qEKFStUVHSj5V9TM9mMndKp7pRZk4MkcxMgOkRKIZDIAOPqj3qytauq0jYlUVNNp0VqJhQB86OsCQmxq06hHGcBn9AQDTbEdobc1/amZzmr6ZSmj9GeKtk1juFkxKkCCBgLghwDrOYerPGKc2wqQpyh7zuJDS0sJLZaRi3VKgVQ5wAxijqHJxEeP6YZ35OLuITn9pF/Zm0UBt998M782tfujAO7s8dwihfMLP+UWMzbxd1ysvPz72g8aZbPHcIoXzCz/AJRY9n1pLXv3y757b6mXDpwoZVZZSWpGOocw5MYwiXiIiIiIwHjeLvfay/ZR97IeMtKZnk1pqfs59I3ZmcyZKb1uuUhTCQ3jwYBAevwhGvz5gyfyxeWPWiLhi4RMgs3UIBk1EzF0mIYo8BKICICHiiGdpq030b0r6rS92AQDpL3w8vHPoTb4cHSXvh5eOfQm3w4f/tNWm+jelfVaXuwdpq030b0r6rS92AQDpL3w8vHPoTb4cHSXvh5eOfQm3w4f/tNWm+jelfVaXuwdpq030b0r6rS92Ay/rqr6jrifmn1UzM8ymR0ypGXMmQgiUvzQwQADh+iNFdiXvYqR+2+2rxK+01ab6N6V9Vpe7Esp+TSmn5QhKJFLWktl7fVuWrVIE009RhMbBQ4BkxhH9IjAffBBBAVBtmNHT7ZsqtqybLOnB+R6EkUxOc2HiAjgA4jwAR/dC27ATZzTN0Z48qNurJmyskMkms/ILchz79IdIGPgBHACOPqGHarKppHR9Nu6jqR+VhKmmjfuDEMcCazlIXgUBEcmMUOAeGFh2nJ/KNoCjZdS1oHpapnEvmATB02SIZAU24JnTE+VgIUfwlCBgBEePVANRLJvKZoKgSyaMnop41g3XKppz1Z0iOOoY+2Ev2WkVdnh1UDi8hOxRKekbklplh5RygyIqCoAbjXjTvCfOx87hnjDW2+rmla/ky05pCbkmjBFwZsosRI6YFVApTCXBygPUco9WOMAhW333wzvza1+6MO7s8dwihfMLP8AlFhItvvvhnfm1r90YY2y+0DZ+Q2jpOSzatEGswYyhs3coi0cGFNQqZQMXIJiA4EPAMAmd3KXqVa69XrI09N1E1J49MQ5GSglMArnEBAQDiERRemKkboKLr09Nkkkyic5zs1ClKUAyIiIhwAA8MaS9Jex/l429Cc/DiaXWl7yf2lqyVyhEXTyYyF43aJAIFFVRRA5SFyOADIiAccdcBkhDI/J3d3d75hcfzUIrqprC3bpqQPJ9PKOXZy1knvXC5nbcwEL48FUER6/AEWL8nd3d3vmFx/NQgNB4+OZzWVysExmcyZsgUzoFwuVPVjrxqEM9YRxrhV5Sdv5UhNKwnBJUzcLg3SVOkooBlBKJtOCFEeooj+6Ew267n0LcNjSSdGz9ObGYquzOQIgqnuwOCWn55S5zpN1eKAeuWzGXzNAy8tfNXqRTaBUbqlUKBsAOMlEeOBDh9cfPMJ/Ipe4Fs/nUtaLgACKa7ohDYHqHAjmE92I7vW5oC1Mzk1X1MlK3608VcponbrKCZIUECgbJCCHWQwdeeEU5thVfTlcXncT6lpmSZS07FukVcqZyAJilHUGDgA8P0QEVv8ALIub31s4bqprIqTx2YiiZgMUwCqbAgIcBCNNrO9yOjfMLH2ckZIxrdZ3uR0b5hY+zkgMnXqKridLIIJHVVUcGIQhCiYxjCbAAAB1iI+CPu7E6p8mpz6Cr7sSKzvfBUb+1bH2skal1PPJVTUgeT6eOys5ayT3rhcxDGAhfHgoCI9fgCAyJmMjnctQBxMZPMGaIm0gou2OmUR8WRAAzwGOdD27SlWU9fm36FFWlmRKnn6MwTmCjNJM6AlbkIoQx9SwELwMoQMZzx6uuFLuFaS4lv5UhNKwptWVM3C4N0lTuEVAMoJRNpwQ4j1FEf3QDF/Jn/jOuv1LH7y8OJMp5JZYuVCZTiXslTF1gm4ckTMJciGcGEOGQHj9UIdsKXIom3j6rVKynqcpK+SaFbCdFRTeCQVdXzCmxjUXr8cdraapmeX+rxlWNoWBqokTOVpyxw7SOVACOSKqqmT0rCQwiBFkxyAY/C68gOAi+25L39Q31czGQMXM2ZGl7YgOGSRl0hMBRyGogCGQ8UNhsZtHTHZspRq9bLNXBOWa0lkxIcuXi4hkB4hwEB/fH42PaQqOh7MN5DVUsPLZkR84VMgZQhxAphDSOSCIcf0xcUAQQQQFM7bXexVd9i9tQhb/AJN7uuVB5hP7QjDIbbXexVd9i9tQhNtkW6NOWoryaTypkZiq1dyszRMGSRVDgcVUz8QMYvDBB8MA0O29a2trmsaVSo2VpvzS9R0ZyB3SaOgDglp+eYM50m6vFEZ2farkezfRjuh7vOzSOevpieat26SRnYGbHTTSKfWiBigInQUDAjnhnGBCLpsneukbuLzVGl282RNLCpGX5cgRMBBQTAXTpObPzBz1eCKl2uNn+uLrXIl9RU06kiTNvJ02RyvXB0z7wqyxxEAKQwYwoXw+OAWna3ranK/vE4qKlnp3stOyQSKqZE6Q6igIGDScAH/iP1TWzZeCoqfl8+lNNoLy+YNyOWygzFuQTpnADFHAnAQ4D1DENuzb+eWzq9Sl6hVZKvk0SLCZooY6ek4ZDiYpRz+6G0tRtX2zpa2VNU3MmNSHeSyVt2i5kWaRiCciYFHSIqgIhkPEEBRvRTvh5KtvWjb4kNu22pbKNWyTZeqXBVUSAmcObHI4MAYH/wDCOD0zbTfk+qvQUviwvFYbKlypPTs4q109pwZeyaLzFUpHaoqCkQhlBAA3WNWkOrPX4YC8b9bRlpKrs7U9OyOo13EyfshSbpGl7ggGNkBxqMQADq8Iwu2xxXtL26uu5n1WvzsZepKVmxVCoHVEVDKJGAMEAR6im4/VFY0JTMxrOsJZS8pO3I+mSwIoGXOJUwMICP4QgAiAcPEMXt0Mrs/lClfTlfhQEj20r0W7uTbyUSij50q+eNpsVyqQ7NZIATBFQucnKADxMHCFLi17zWDra1FPNJ5UzqSqtXbsGiYMnB1DgcSGPxAxC8MEHwxVEBYtsrKXGuRIV55SEkSfMEHRmiih3qKQgqUhDiGDmAeo5ePVxiVdFO+Hkq29aNviQyHycXcQnP7SL+zNom12do2grZ1gpS9QtJ6q+TRIsJmjZM6ek4ZDiZQo5/dAJz0U74eSrb1o2+JDT0ltEWmo2lZRSFQVEu1nEjYoy2YIFl66gJOEEwTUKBikEpsGKYMgIgOOEXbR8+ZVTSsrqSWlWIzmbRN2gVYoFOBDlAwagARABwPjGMp7xd1ysvPz72g8B/bcTmXya79N1DMFhSlzGftXrhUCCYSpEcFOY2kAyOCgI4AMw7Vzb125urQM4t3RE7VmNRz5uLSXNTslkSqqiICACdQoFLwAeIiARnzEysnU0uoy69O1RNiODsZa8BZcqBAMoJQAQ/BARABHj4wgGm2OLIXIt1ddzPqtkiLGXqSlZsVQr1FURUMokYAwQwj1FNx+qLK20rd1Zcm3kolFHy4j542mxXKpDuE0gBMEVC5ycQAeJg4R2bPbQlC3SqpWm6baztJ4m0O7MZ42TITQUxSjxKoYc5OHg8cSS810actRTzSeVMjMVWrt2DRMGSRVDgcSGPxAxi8MEHwwGbV0rS11bJKXq1lKUmBJgZQrYSO0ltYk06vmGHGNRevxwwGxfeu3Nt7XTKR1fO1WL9edqu00yMllQFIyCBAHJCiHWQ3Dr4RD9sW9dI3cZ0yjS7ebImlijky/LkCJgIKAmBdOk5s/MHPV4IXWA12t3W1OXApslRUs9O9lp1TpFVMidIdRRwYNJwAf+IkUI5su7RtBWztQhS9QtJ6q+TeLLCZo2TOnpOICHEyhRz+6G/tlWcpuFQ8vq+RJu05e/wB7uSuiARQN2qdM2QARAPwiD4erEBJIIIICmdtrvYqu+xe2oRmbGtl36Ha3Ht1NKMevlmLeY7nWuiUDHJu1iKhgB4cRIAfvheehDS3lxOfRUoBe9me9/aYcz1bsY5952IgXHL+Tbrdicf8AbPqzr+rGPDD1bON1+3DQ7ypuYeZOTTI7Hk/LOUatKSR9erQTGd7jGPB18eFM9CGlvLic+ipRd9grWS+0VHO6bl01dTNJzMDvhVcJlIYpjJpk04L4MJgP74Ctr/bMHbVuGrV3ZxzPvGySHJuat/jQAhnXvi9eerEV/wBBj86P8A/uIl20btMz21tzFqTYUxLZigm1RXBZdc5TCJwERDAcOEVx03qq8h5L6SrAdnoMfnR/gH9xB0pO2H/pP2Dc2dk3/bvOXO2+5Nyn/p99utyXXp16tGoucY1B1xxum9VXkPJfSVYlbzZikVv5etdVnVEyevabSNUCLNVAhU1lGwcoKmYwcQKIkABEOOBgOb0b+0b/AKt9mfZB2L/9dzbzZyXlOOGje70+j53XoN1dUHTn/Nd/H/7eOfKtoudXumKFp5rTkvlLKpjchWetljnVRKPHUUpuAj+D4Yi+01s3yS01vEKnl1STCZLKzFNmKK6JClADEUNqyHHP4Af/AGAnHZh0xP8AsDm7sI5n/wA45bvucd9p/wAHd6NKOn/zatWofm4xxyB0GPzo/wAA/uIivyb3dcqDzCf2hGH2gKz2cbUdp6h3lM8/c98pmR33KOR8n06kkiaNOs+cbrOc+Hq4ca/v9swdtW4atXdnHM+8bJIcm5q3+NACGde+L156sQxkEAmfSk7Uf+l3YNz12J/5PzhztyflXJ/8Pe7vcn0atOdOo2M4yMKRWM47IaunM/5PybnN+u83OvXu94oY+nVgM41YzgM+IIk+0P3d668/PP5poZKiNjimqgouRz5aspugpMpc3eHTI2TEpBUTKcSgI+ANWIDxa7Du/bJLds/TvCAbHMOcZDP/ALEenQY/Oj/AP7iPS3+1zUc6uDT9HK0hKkkH01bSwy5XCgnKU6pUxOAdWQAcwzt36qcURbOfVY1aJO15Y1FciKphKU4gIBgRDj4YBXu130Rf9UeeOzTlX+T838m5v073/E3u81K5xucadPHVnIY4nZh0xP8AsDm7sI5n/wA45bvucd9p/wAHdaNKOn/zatWofm4xxyFTX42kJ3dmi0aYmNNy6WopPSPAWQWOYwiUpy6cDwx+GP8A8iJ2BuxMbQ1Q+n0tlLWZqu2QszJuFDEKUBOQ+oBL4fwAD98AwvQY/Oj/AAD+4igNo61HaerhnTPP3PfKZaR9yjkfJ9OpVUmjTrPnG6znPh6uHG5um9VXkPJfSVY79N0O12umJ7k1G+Wpl3LVRkZGrAoKpnImALgoIn46hFyYMdWChAVzYHZg7atvEqu7OOZ945VQ5NzVv8aBAM698Xrz1Yh2bJUL2tbYSiiudOdebt9/1fJ9zvN4uor8zUbGNeOsc4z9UeVkbcsrW0IlSbCZOJigm4UXBZcgFMInEBEMBw8ETiAIIIIAgisdqipp5R9hqjqOm35mE1acl3DgpCnEmt0iQ3AwCA5KYwcQ8MIn0l74eXjn0Jt8OAazbeulW1smNKq0bNE2Bpgo6K5E7VNbWBAS0/PKOMajdXjhZOlZfDyqbeq23w4tnZaWV2h3VQN7yH7K0pERueWlWDk/JzLCoCghuNGdW7J87PzeGOMVbtuUNStAXWlkmpCUElbBaRpOVESKnUAyorrlE2TmEeohQ68cIC+bGW/pW/8AQSVxLpy885qNZwo0O6ScHbFFJIQAgaEhKXgAjxxkYTy8Uml9O3XqqQylEUJfL5s5bNkxOJxImRQSlDIiIjwDrGHt2BO95a+cnX3giXz/AGfrPz6dvZ1NqLQdTB8udw5WF24KKihhyY2AUAAyI+AICBW42ZbNzm3lNzeYUy4VePpS1cuDhMnBQModEpjDgD4DIiPAIti+KZUrF1ykQMFJTMwKUPqBqpCI1rfe7NKVlO6Wp+sF2Mnk0wcS+XtitEDAg3RUMmmQBMQTDpKUoZERHhxEY0ReS9nP6XWlc3RB0zmLIzd2kIiUFU1CaTlyGBDICIcMdcBkdSVQTWlakY1FI3BW8yYKgq3VMmU4FNjGdJgEB6/CEM5YKsqh2iq2WoO7Twk7kCDFSZJt0kSNRBwmYhCm1ogU3AqpwxnHH6ghiujRY/yDbemufiRWO0pSdPWGt+hWtpZaSmJ+tME5eo8SUOuJm5yKHMTSsJy8TJkHOM8OvrgLotjZe3dtpy5m9HyVVi8ctxbKnO8WVAUxMU2MHMIBxKHGK023rpVtbJjSqtGzRNgaYKOiuRO1TW1gQEtPzyjjGo3V44VPpL3w8vHPoTb4cXVstLK7Q7qoG95D9laUiI3PLSqhyfk5lhUBQQ3GjOrdk+dnGnhjjAXDsX3Aqq5FrplPKvmBHz9CdqtE1CNyJACRUEDgGCAAdZzcevjF3wjG01U08sDXjKjrQvzUvInkrTmbhokQq4HcnVVSMpqWA5gESIphgBx+D1ZEc1Z0l74eXjn0Jt8OAju0P3d668/PP5pok8k2mrySaTMZRL6mbpM2LdNs3IMtbmEqZCgUoZEmRwABxGKqn82mE+nb2dTZyLqYPlzuHKwlAoqKGHJjYAAAMiPgCPhgNDqtsLbCjaEm9wqfkKzWopHK1pzL3Jny6gJO0EhWTOJDHEpgA5SjpEBAcYEMQpdXbRl26qpt9Ts8qJBxLX6QpOEiy9uQTFznGopAEOrwDHyzfaBvBNpC7kUwrRdeXPGp2jhAWjcAOkcokMXIJ5DJREMgOYq+AIvbYtt3SdybhzeUVhLjvmbaUmcpEI4USEFAWTLnJBAR4GHhFExJbe15Vlv5qvNKPnB5U8cIC3VVIkmoJkxMBtODlEOsoD+6AvbbetLQtsmNKq0bKVGBpgo6K5E7tVbWBAS0/PMOMajdXjiqbZXruNbeQryOkJ2kxYLujO1EzskVRFUxCEEcnKI9RC8OrhHLuNc+urhpsk6yn6k2KxE5mwHQST3Yn06vmFLnOkvX4oZTYktDbmv7UzOc1fTKU0fozxVsmsdwsmJUgQQMBcEOAdZzD1Z4wF7bJFbVHcCzreoqpekezI71dIypUSJBpKIAUNJAAP8AiLdjhULSFOUPICyGlpYSWy0ihlSoFUOcAMb5w5OIjx/THdgCCCCA+CoJNKaglC8onstaTKXuNO+aukgUTU0mAxclHgODFAf0gERPtNWm+jelfVaXuxFNtrvYqu+xe2oRmvLZdMJmsZGWsHT1QpdRiN0TKGAOrIgUB4cQgNb6ToqkaSO5PS9MymSmdAUFxYtSIiqBc6dWkAzjI4/SMeNVUBQ9VTBOY1LSUknDxNIESLvWRFTlTARMBQEwCOMmMOPrGMpuxOqfJqc+gq+7B2J1T5NTn0FX3YDWymqfkdNSsJXT0pZSpiU4nBu0RKkmBh6x0lDGRjpRkD2J1T5NTn0FX3YOxOqfJqc+gq+7AakvrSWvfvl3z231MuHThQyqyyktSMdQ5hyYxhEOIiIiIjH0XiduZXZ2sn0tXUZumdPvlWyyJhIdE5G5xKYoh1CAgAgIdWIyXWSURWOismdNVMwlOQ4YMUQ4CAgPUMau3bRVcWEq5BBI6qqlLvSETIUTGMYWpwAAAOsRHwQGbfbluz9JFVetFfei5tj2fTq6N1HNOXImryrpMnKlnZGM4WM6QKsVRIpVAIfIagA5gAevBh8cVzs2SSdSm+tIzGayiYMGTeYFOs4ctjppJl0jxMYwAAB9YxpH2WUr5TSX05L3oCO9pq030b0r6rS92F021007SsqWWteQtFqTNR0V+aSByQXIJgkJAU3eNWnWfGerUPjjq/KHTuTTO1EhRls3YPVCzwhjEbuSKGANwsGRAojw4hCSSyVTSaCoEslrx6KeNYN0DKac9WdIDjqGAeTY1k0purbCZVDcuWtKwm7edKskXs5SB2smgVBA5UinUyIEAyhzAHVk5h8ML5trU/I6avm5ldPShlKmJZe3ODdoiVJMDCUcjpKGMjFOTKXTCWrlQmLF0yVMXWBHCRkzCXIhnBgDhkB4/VH0S+Qz2YNwcsJLMXaAiIAog1OcuQ6wyAYgNGLGWptnNLNUdMplQVNu3jqStVV11pckc6pzJFETGEQyIiPhjPm6jRswufVbFkgm3at508SRRTKBSJkKucClKAdQAAAABGnlgUVm1kKJbuElEVk5G0KdNQolMUQSLkBAeIDGZV4u65WXn597QeA0ql1nLUHl7Y57c0qYxkiiIjK0siOA/wD1j6O01ab6N6V9Vpe7H7u2iq4sJVyCCR1VVKXekIQhRMYxhanAAAA6xEfBCAbMVN1E0v8AUa5dSGaoIJzEonUUZqFKUNJuIiIYCAYDbpt9QtLWaaTKm6QkkoeGnSCRl2bJNI4kFJYRLkoAOBEA4fUEVRsE0vTlV3PnbGppFLpw1SkplU0XrcqpCn36QagAwDgcCIZ+uL++UR7hDLz83/lLxR/yeMyl0suvPlpk/askjSM5SncLFTKI79EcAJhDjwGAcXtNWm+jelfVaXuxJaVpmnqVl6kupqSS+Ts1FRWOgyblSIZQQAomECgAZwUoZ+oI/HZZSvlNJfTkvejoS2Yy+ZoGXlr5q9SKbQKjdUqhQNgBxkojxwIcPrgPpggggCCCCApnba72KrvsXtqELf8AJvd1yoPMJ/aEYZDba72KrvsXtqELf8m93XKg8wn9oRgHJuNciibeJslKynqcpK+E5WwnRUU3gk06vmFNjGovX44h/SXsf5eNvQnPw4pn5TD8WUL+uffdQhKoDTvpL2P8vG3oTn4cWhIJtL59JGU6lLkHUvfIEcNlgKJQUTMGSmwIAIZAfCEY6Rq7s8dwihfMLP8AlFgMzbxd1ysvPz72g8asrzNjJaTUnMzcA3YMGIuXKwlEQTSInqObAAIjgAEeAZjKa8XdcrLz8+9oPGn9wpU+n1m6ikcsSBZ/MaectGyYnAoHVUbmIQMjwDIiHEeEBSu0Ffq0lS2YqmQyOsUHkyesRSboFaOCic2oOGTJgAdXhGM/4u/op3w8lW3rRt8SDop3w8lW3rRt8SArW3tB1ZcCaryuj5OeavG6AuFUiKppiVMDAXVk5gDrMAfvho9lpFXZ4dVA4vITsUSnpG5JaZYeUcoMiKgqAG41407wnzsfO4Z4x3di2y9xLbXDm83rCSpMWbmUmbJHI8RVEVBWTNjBDCIcCjxiS7b1ra2uaxpVKjZWm/NL1HRnIHdJo6AOCWn55gznSbq8UAte25XNK1/daWTmkJuSaMEZGk2UWIkdMCqguuYS4OUB6jlHqxxho9gTveWvnJ194IRC5tv6qtvPkJHV8vIxfrtSu00yOCKgKRjHIA5IIh1kNw6+ENHskX2tlb+zrenapnqzKZEerqmSKxWVDSYQEo6iFEP+YBy4ySvF3XKy8/PvaDxq7TU5l9RU/L59KVhXl8wbkctlBIJBOmcAMUcCACHAeoYyivF3XKy8/PvaDwGhLDaUsimxbpnrtuBiJFKYOROeAgAf/wA49+kvY/y8behOfhxmJBAOXtp3htvXto2slpKp0ZnMCTdFwZErZYggmVNUBNk5ADrMXw+GE0iT21oKqLi1ApIaSYEfTBNuZyZMy5EgBMolKI5OIB1mLw+uLI6Kd8PJVt60bfEgKQhxdiO71uaAtTM5NV9TJSt+tPFXKaJ26ygmSFBAoGyQgh1kMHXnhC6XStLXVskperWUpTYFmBlCthI7SW1iTTq+YYcY1F6/HEFgNO+kvY/y8behOfhxY1G1NI6wptpUdNvyv5U717hwUhiAfQcxDcDAAhgxTBxDwRj9GmWxL3sVI/bfbV4C5oIIICmdtrvYqu+xe2oQt/yb3dcqDzCf2hGGQ22u9iq77F7ahC3/ACb3dcqDzCf2hGAmfymH4soX9c++6hCVRpvtMWQ7c7aRI9k/MXNJ1zZ5Byne7wCB/uE040fXnPgilOgx+dH+Af3EAmcau7PHcIoXzCz/AJRYW7oMfnR/gH9xDXW8p3sRoSRUvyzlvNLBFnyjdbve7sgF1acjpzjOMj+mAywvF3XKy8/PvaDxrLK/xY1/Uk+6EZNXi7rlZefn3tB41llf4sa/qSfdCA5leVPLqMo+Z1RNiODsZaiKy5W5AMoJQEA/BARABHj4wivbPbQlC3SqpWm6baztJ4m0O7MZ42TITQUxSjxKoYc5OHg8cTe6lKdnNvJ1SPL+b+dGwocp3O93WRAc6NRc9XVkIVntd9EX/VHnjs05V/k/N/Jub9O9/wATe7zUrnG5xp08dWchjiDmQRQmzftGduKrphIOw7mPkbAXm+5z5RrwoQmnTuiY+fnOfB1R2tpi9/aYbSJbsY5952OuXHL+TbrdgQf9s+rOv6sY8MBXe1xs/wBcXWuRL6ipp1JEmbeTpsjleuDpn3hVljiIAUhgxhQvh8cU70Mrs/lClfTlfhQ3ezjdftw0O8qbmHmTk0yOx5PyzlGrSkkfXq0Exne4xjwdfHhX9/tp/tVXDVpHsH543bZJflPOu4zrARxo3JurHXmAua1Ehe0tbKmqbmRkTvZZK27RcyJhMQTkTAo6REAEQyHiCE5r/ZHuhPq8qCeMn9MlazGaOXaIKPFQOBFFTHLqAEhwOBDPEYkHTn/Nd/H/AO3ht6OnHZDSMmn/ACfk3ObBB5udevd7xMp9OrAZxqxnAZ8QQGP66ZkV1ET41EMJRx1ZAcR2KEpmY1nV8speUnbkfTJYEUDODiVMDCAj+EIAIgHDxDDbOth3fuVVu2fp3hxNjmHOMjn/ANiPLo39o3/Vvsz7IOxf/rubebOS8pxw0b3en0fO69BurqgJFsnbPddWtua4qSpHUkVZqStVoUrNyoc+syiZg4GTKGMEHw+KLxvNdGnLUU80nlTIzFVq7dg0TBkkVQ4HEhj8QMYvDBB8MLZ05/zXfx/+3irtpDaM7cVIy+Qdh3MfI34PN9znyjXhM5NOndEx8/Oc+DqgLUuy5T2t0pc0teBmalMGUUfjOw5OBgcaQJu93vM/+E+c4xw64Wa8tsqhtTU7analWl6rxwyK9IZkqZQm7Mc5AARMUo5ymbweKJZsz3v7TDmerdjHPvOxEC45fybdbsTj/tn1Z1/VjHhjlbR11+3DXDOpuYeZOTS0jHk/LOUatKqp9erQTGd7jGPB18eAda02zlXtzKQTqinnciSYqLHRArtyoRTUQcDwKmYMfvh89nKjJtb2zMhpCeqNFJgw5RvjNTidMd44VULgRABH8E4eDrzEC2BO95a+cnX3gi/4AggggKZ22u9iq77F7ahCKWBuxMbQ1Q+n0tlLWZqu2QszJuFDEKUBOQ+oBL4fwAD98aV3SoqVXEoSY0dO3D1uwmG63qjM5Sql3apFQ0iYpg+cQM5AeGf0xRnQqtZ+X6z9Mbf08BWfTeqryHkvpKsHTeqryHkvpKsWZ0KrWfl+s/TG39PB0KrWfl+s/TG39PAVn03qq8h5L6SrB03qq8h5L6SrFmdCq1n5frP0xt/TwdCq1n5frP0xt/TwCJ1XN1KgqibT5ZEiCkyerPDpkHJSCocTiUBHwBqxGsFXTxWmLXTipEECOFZTJF3yaRxECqGSQMcCiIdQCJcRRfQqtZ+X6z9Mbf08MHUsgZz+jpnSzxVdNlMZerL1jpGAFCpqJimYSiICAGwI4EQEM+CATDpvVV5DyX0lWOlTtwXm1m/NbGope3ptm2TGbldsDiqoY6QgmBMH4YEFhHP1BE66FVrPy/Wfpjb+nibWY2daJtTVqtS07NKhdPFWh2hiP3CJ09BjFMI4IkUc5IHh8fCApupKRbbITNOvKceK1M5m6nNCjZ+UEiJkMArawEnERyiAY+sY8aZcm2xzLs6lKFLlpUCqoGl/+KK4ucgYDa+rG5DGPGMMjey1VPXbpxnIqjeTRo2aOwdpmYKpkOJwIYmBE5DhjBx8Hi4xy7G2QpSz682WpqYTt2aaFSKvzgskcCgmJxLp0Jkx88c5z4IBfakrh3siviW2pxijUzSZJBPDun5hSUIdQRQFMAJw0gDYo568mGFxvdcV7dKu1asfy1vLl1G6aAooHExQAgYAcjx4xoDevZ6ou7NVNqjqOZ1A1dtmJGRCMF0SJiQp1DgIgdI46sqG8OMAHCIL0KrWfl+s/TG39PAQS2eyDTdWW8p+p3FYTZstNZcg8Oim3TEqYqEAwlAR4iAZhwqUlCdP0vKZCisddOWskWZFDhgxwTIBAMIB4R05jzoyQM6VpKU01LlV1WcraJtEDrmAVDEIUCgJhAAARwHHAB+iOtAJ3RG19UlQXJkdKLUfKUUZlOG8vOsRwoJiFUWKmJgAeGQA2YaO5VKt63oSb0m6dqtEJm3FA6yZQMYgCIDkAHh4Ip6mtkm3EgrGWVSznVWKPZdMEpgiRV03FMyiagKFAwAgAiXIBkAEBx4YYKAU3oQ0t5cTn0VKDoQ0t5cTn0VKGyggM39quxcps40p5aWT17NBmp3BTg4SKTd7sExDGnrzrH/5FDxqffKzNL3gQlKNSv5w0LKzKmQ5vWTIJhUAgG1a0z5+YGMY8MVf0KrWfl+s/TG39PAL3ZHaZntraESpNhTEtmKCbhRcFl1zlMInHIhgOHDEPJYSuHVx7TyWs3rFFi4mO/1oImExCbtdRIMCPHiBAH98U/0KrWfl+s/TG39PF52toqVW7oSXUdJHD1wwl+93Sjw5TKm3ip1R1CUpQ+cccYAOGP0wEmggggCCCCAIIIIAggggCCCCAIIIIAggggCCCCAIIIIAggggCCCCAIIIIAggggCCCCA//9k=" alt="Código QR QuickCapture" style="width:90px; height:90px; border:1px solid rgba(0,51,160,0.15); padding:4px; background:white;">
+            <div>
+              <div style="font-size:0.75rem; font-weight:600; color:var(--azul); margin-bottom:0.2rem;">Escanea para acceder</div>
+              <div style="font-size:0.72rem; color:#777; line-height:1.5;">Apunta la cámara de tu móvil al código QR para abrir el proyecto directamente.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-brand">
+    <h3>SIG Movilidad Urbana — Madrid</h3>
+    <p>Proyecto Final de Máster (TFM) desarrollado en colaboración con Esri España.<br>
+    Máster GIS Online · Andrés Paredes Fernández · andres.paredes@esri.es</p>
+  </div>
+  <div class="foot-col">
+    <h4>Navegación</h4>
+    <ul>
+      <li><a href="#sobre">Sobre el proyecto</a></li>
+      <li><a href="#herramientas">Herramientas</a></li>
+      <li><a href="#funcionalidades">Funcionalidades</a></li>
+      <li><a href="#storymap">StoryMap</a></li>
+      <li><a href="#entregables">Entregables</a></li>
+      <li><a href="tecnico.html">Documentación técnica</a></li>
+    </ul>
+  </div>
+  <div class="foot-col">
+    <h4>Herramientas Esri</h4>
+    <ul>
+      <li><a href="https://www.esri.com/es-es/arcgis/products/arcgis-pro/overview" target="_blank">ArcGIS Pro</a></li>
+      <li><a href="https://www.arcgis.com" target="_blank">ArcGIS Online</a></li>
+      <li><a href="https://experience.arcgis.com" target="_blank">Experience Builder</a></li>
+      <li><a href="https://storymaps.arcgis.com" target="_blank">StoryMaps</a></li>
+      <li><a href="https://www.esri.com/es-es/arcgis/products/arcgis-field-maps/overview" target="_blank">Field Maps</a></li>
+    </ul>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Andrés Paredes Fernández · Máster GIS Online · Esri España</span>
+    <span>Datos: datos.madrid.es · OpenStreetMap</span>
+  </div>
+</footer>
+
+</body>
+</html>
