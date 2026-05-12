@@ -23,10 +23,7 @@ El sistema permite, entre otras cosas, calcular rutas teniendo en cuenta las res
 ├── 🌐 Web/
 │   ├── index.html                          # Página principal del proyecto
 │   └── tecnico.html                        # Página de documentación técnica
-├── 🐍 Notebooks/
-│   ├── notebook1_red_viaria.py             # Construcción de la red viaria
-│   └── notebook2_rutas_ZBE.py               # Análisis de rutas ZBE
-├── 🔧 Modelbuilder/
+├── 🔧 Proyecto/
 │   ├── Proyecto_Completo.Zip               # Proyecto completo para ArcGIS Pro
 └── 📄 README.md
 ```
