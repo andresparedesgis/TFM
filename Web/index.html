@@ -114,8 +114,9 @@
 
     /* FUNCIONALIDADES */
     .func-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .func-card { padding: 1.8rem; background: var(--fondo); border-bottom: 3px solid transparent; transition: all 0.2s; }
-    .func-card:hover { background: white; border-bottom-color: var(--azul); }
+    .func-card { padding: 1.8rem; background: var(--fondo); border-top: 3px solid transparent; transition: all 0.2s; }
+    .func-card:hover { background: white; border-top-color: var(--azul); }
+    .func-cat { font-size: 0.7rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: var(--azul); margin-bottom: 0.7rem; }
     .func-icon { font-size: 1.8rem; margin-bottom: 0.9rem; }
     .func-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; margin-bottom: 0.5rem; }
     .func-desc { font-size: 0.8rem; line-height: 1.65; color: #666; }
@@ -158,7 +159,7 @@
       font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0; line-height: 1.5;
     }
 
-    /* ENTREGABLES */
+    /* Elementos del proyecto */
     .pub-bg { background: white; }
     .pub-layout { margin-top: 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
     .pub-info h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 1rem; }
@@ -293,7 +294,8 @@
     <li><a href="#herramientas">Herramientas</a></li>
     <li><a href="#funcionalidades">Funcionalidades</a></li>
     <li><a href="#storymap">StoryMap</a></li>
-    <li><a href="#entregables">Entregables</a></li>
+    <li><a href="#justificacion">Justificacion</a></li>
+    <li><a href="#Elementos del proyecto">Elementos del proyecto</a></li>
   </ul>
 </nav>
 
@@ -446,31 +448,37 @@
   <p class="section-desc">El sistema integrado ofrece las siguientes funcionalidades tanto para técnicos GIS como para el ciudadano final.</p>
   <div class="func-grid">
     <div class="func-card">
+      <div class="func-cat">Enrutamiento</div>
       <div class="func-icon">🔀</div>
       <div class="func-title">Evaluación de rutas</div>
       <p class="func-desc">Cálculo de itinerarios óptimos considerando los servicios disponibles a lo largo del recorrido y los tiempos de coste reales de la red viaria.</p>
     </div>
     <div class="func-card">
+      <div class="func-cat">Restricciones</div>
       <div class="func-icon">🚗</div>
       <div class="func-title">Restricciones ZBE</div>
       <p class="func-desc">Validación automática de si un vehículo puede circular por las ZBE según su etiqueta DGT, con cálculo de ruta alternativa en caso de restricción.</p>
     </div>
     <div class="func-card">
+      <div class="func-cat">Parking</div>
       <div class="func-icon">🅿️</div>
       <div class="func-title">Localización de aparcamiento</div>
       <p class="func-desc">Análisis de cobertura de estacionamientos en el entorno del destino, filtrando por tipo, zona SER y disponibilidad.</p>
     </div>
     <div class="func-card">
+      <div class="func-cat">Movilidad</div>
       <div class="func-icon">⚡</div>
       <div class="func-title">Servicios en ruta</div>
       <p class="func-desc">Identificación de gasolineras y puntos de recarga eléctrica disponibles en el entorno del itinerario planificado.</p>
     </div>
     <div class="func-card">
+      <div class="func-cat">Análisis espacial</div>
       <div class="func-icon">🗺️</div>
       <div class="func-title">Análisis de densidad</div>
       <p class="func-desc">Ráster de densidad Kernel de estacionamientos para identificar zonas con mayor y menor concentración de servicios dentro del ámbito ZBE.</p>
     </div>
     <div class="func-card">
+      <div class="func-cat">Turismo</div>
       <div class="func-icon">🏛️</div>
       <div class="func-title">Itinerarios turísticos</div>
       <p class="func-desc">Planificación de rutas optimizadas combinando criterios de accesibilidad, restricciones ZBE y puntos de interés turístico y cultural.</p>
@@ -592,8 +600,8 @@
   <a href="tecnico.html" target="_blanck" class="btn-tecnico">Ver documentación técnica →</a>
 </div>
 
-<!-- ENTREGABLES -->
-<section class="section pub-bg" id="entregables">
+<!-- Elementos del proyecto -->
+<section class="section pub-bg" id="Elementos del proyecto">
   <div class="section-tag">Proyecto Final</div>
   <div class="pub-layout">
     <div class="pub-info">
@@ -607,16 +615,7 @@
         <div class="capa-body">
           <div class="capa-name">Aplicación interactiva — Crea tu ruta por Madrid</div>
           <div class="capa-desc">Accede al Experience Builder del proyecto para planificar tu ruta, consultar restricciones ZBE y localizar servicios de movilidad en Madrid.</div>
-          <a href="https://experience.arcgis.com/experience/bd0340f81f194ab8a0a22dff74cf31ad" target="_blank" class="capa-link">Pinche aquí para acceder</a>
-        </div>
-      </div>
-
-      <div class="capa">
-        <span class="capa-tipo">StoryMaps</span>
-        <div class="capa-body">
-          <div class="capa-name">Historia del proyecto — ¿Por qué este SIG?</div>
-          <div class="capa-desc">Narrativa interactiva que explica el origen del proyecto, la problemática de movilidad en Madrid, cómo funciona el sistema y qué puede hacer con él cada tipo de usuario.</div>
-          <a href="#storymap" class="capa-link">Ver el StoryMap</a>
+          <a href="https://experience.arcgis.com/experience/bd0340f81f194ab8a0a22dff74cf31ad" target="_blank" class="capa-link">Accede a Experience Builder</a>
         </div>
       </div>
 
@@ -653,7 +652,7 @@
       <li><a href="#herramientas">Herramientas</a></li>
       <li><a href="#funcionalidades">Funcionalidades</a></li>
       <li><a href="#storymap">StoryMap</a></li>
-      <li><a href="#entregables">Entregables</a></li>
+      <li><a href="#Elementos del proyecto">Elementos del proyecto</a></li>
       <li><a href="tecnico.html">Documentación técnica</a></li>
     </ul>
   </div>
