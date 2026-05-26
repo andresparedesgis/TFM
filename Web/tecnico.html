@@ -84,7 +84,8 @@
 
     /* NOTEBOOKS */
     .nb-grid { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .nb-card { background: var(--oscuro); color: white; padding: 2.2rem; position: relative; }
+    .nb-card { background: var(--oscuro); color: white; padding: 2.2rem; position: relative; border: 1.5px solid rgba(232,200,74,0.55); transition: border-color 0.2s, transform 0.2s; }
+    .nb-card:hover { border-color: var(--acento); transform: translateY(-3px); }
     .nb-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--acento), var(--azul-medio)); }
     .nb-tag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acento); margin-bottom: 0.7rem; }
     .nb-title { font-family: 'DM Serif Display', serif; font-size: 1.15rem; margin-bottom: 0.7rem; }
@@ -93,7 +94,7 @@
     .pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); font-size: 0.68rem; color: rgba(255,255,255,0.55); padding: 0.16rem 0.5rem; }
 
     /* USUARIOS */
-    .users-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.12); }
+    .users-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,0.12); }
     .user-card { background: rgba(0,0,0,0.1); padding: 2rem 1.8rem; transition: background 0.2s; }
     .user-card:hover { background: rgba(0,0,0,0.22); }
     .user-icon { font-size: 2rem; margin-bottom: 0.8rem; }
@@ -199,7 +200,6 @@
         <li>Aparcamiento Alta Rotación</li>
         <li>Aparcamientos (Garajes)</li>
         <li>Aparcamientos Minusválido</li>
-        <li>Parkings Públicos ZBEDEP Centro</li>
       </ul>
     </div>
 
@@ -208,7 +208,6 @@
       <div class="ds-name">Seguridad Vial</div>
       <ul class="ds-layers">
         <li>Radares de Velocidad (fijos)</li>
-        <li>Tramos control velocidad media</li>
       </ul>
     </div>
 
@@ -218,7 +217,6 @@
       <ul class="ds-layers">
         <li>Gasolineras</li>
         <li>Recarga Vehículos Eléctricos</li>
-        <li>Sitios Públicos</li>
         <li>Elementos de Interés (turismo y cultura)</li>
       </ul>
     </div>
@@ -237,17 +235,6 @@
 
     <div class="ds-card">
       <div class="ds-num">Feature Dataset 07</div>
-      <div class="ds-name">Capas_Field_Maps</div>
-      <ul class="ds-layers">
-        <li>Accidentes</li>
-        <li>Peligros Generales</li>
-        <li>Policías</li>
-        <li>Radares</li>
-      </ul>
-    </div>
-
-    <div class="ds-card">
-      <div class="ds-num">Feature Dataset 08</div>
       <div class="ds-name">Rutas_Punto_A_Punto_B</div>
       <ul class="ds-layers">
         <li>Rutas calculadas</li>
@@ -272,10 +259,10 @@
       <p class="modelo-desc">Genera la estructura completa de la geodatabase e itera sobre las capas en bruto distribuyéndolas automáticamente en los ocho feature datasets correspondientes.</p>
       <div class="steps">
         <div class="step"><div class="step-n">1</div><span>Create File Geodatabase → GDB_Movilidad</span></div>
-        <div class="step"><div class="step-n">2</div><span>Create Feature Dataset × 8 datasets temáticos</span></div>
+        <div class="step"><div class="step-n">2</div><span>Create Feature Dataset × 5 datasets temáticos</span></div>
         <div class="step"><div class="step-n">3</div><span>Iterate Feature Classes sobre datos raw</span></div>
         <div class="step"><div class="step-n">4</div><span>Project + Add Field + Calculate Field</span></div>
-        <div class="step"><div class="step-n">5</div><span>If Field Value Is → Copy Features al dataset correcto</span></div>
+        <div class="step"><div class="step-n">5</div><span>Select Layer By Attributes + If row Count → Copy Features al dataset correcto</span></div>
       </div>
     </div>
     <div class="modelo-card">
@@ -328,45 +315,32 @@
   <div class="section-tag tag-gold">Gestión de usuarios y grupos</div>
   <h2 class="section-title title-white">Perfiles de usuario en ArcGIS Online</h2>
   <p class="section-desc desc-muted">
-    La organización de ArcGIS Online se ha estructurado en tres grupos que reflejan los perfiles
+    La organización de ArcGIS Online se ha estructurado en dos grupos que reflejan los perfiles
     definidos en el proyecto, controlando el acceso a los contenidos y las aplicaciones de cada rol.
   </p>
   <div class="users-grid">
 
     <div class="user-card">
       <div class="user-icon">🔬</div>
-      <div class="user-name">Técnicos GIS</div>
-      <p class="user-desc">Profesionales con formación en SIG y gestión territorial. Acceso completo a todos los servicios, capas editables y herramientas de análisis. Tienen permisos para publicar y modificar contenidos.</p>
+      <div class="user-name">Técnicos GIS, Gestores y Servicios de Emergencia</div>
+      <p class="user-desc">Profesionales con formación en SIG y gestión territorial, así como cuerpos de seguridad y emergencia que operan sobre el terreno. Acceso completo a todos los servicios, capas editables y herramientas de análisis. Tienen permisos para publicar y modificar contenidos en el portal.</p>
       <div class="user-apps">
         <a href="https://www.esri.com/es-es/arcgis/products/arcgis-pro/overview" target="_blank" class="user-app">ArcGIS Pro</a>
         <a href="https://experience.arcgis.com/experience/bd0340f81f194ab8a0a22dff74cf31ad" target="_blank" class="user-app">Experience Builder</a>
+        <a href="https://mastergis.maps.arcgis.com/home/index.html" target="_blank" class="user-app">Field Maps</a>
       </div>
       <ul class="user-casos">
-        <li>Actualización y validación de datos</li>
-        <li>Generación de informes espaciales</li>
-        <li>Seguimiento del estado de la red viaria</li>
-        <li>Publicación y modificación de servicios web</li>
-      </ul>
-    </div>
-
-    <div class="user-card">
-      <div class="user-icon">🏛️</div>
-      <div class="user-name">Gestores y Administración</div>
-      <p class="user-desc">Responsables institucionales de la gestión del tráfico y la planificación de infraestructuras. Acceso a Experience Builder y capas operativas en modo consulta. Sin permisos de edición.</p>
-      <div class="user-apps">
-        <a href="https://experience.arcgis.com/experience/bd0340f81f194ab8a0a22dff74cf31ad" target="_blank" class="user-app">Experience Builder</a>
-      </div>
-      <ul class="user-casos">
-        <li>Capas operativas en modo lectura</li>
-        <li>Análisis de cobertura de servicios</li>
-        <li>Control de acceso a zonas de bajas emisiones</li>
+        <li>Actualización y validación de datos en campo</li>
+        <li>Gestión del ciclo de vida de incidencias (Abierta → En revisión → Resuelta)</li>
+        <li>Seguimiento del estado de la red viaria y sus servicios asociados</li>
+        <li>Publicación y modificación de servicios web en ArcGIS Online</li>
       </ul>
     </div>
 
     <div class="user-card">
       <div class="user-icon">🧭</div>
       <div class="user-name">Público General</div>
-      <p class="user-desc">Ciudadanos y turistas sin conocimientos técnicos. Acceden a través de aplicaciones públicas diseñadas para ser autoexplicativas: QuickCapture para reportar incidencias en un toque, y Experience Builder y StoryMaps para consultar y planificar desplazamientos.</p>
+      <p class="user-desc">Ciudadanos y turistas sin conocimientos técnicos GIS. Acceden a través de aplicaciones públicas diseñadas para ser autoexplicativas. No tienen permisos de edición sobre los datos de infraestructura.</p>
       <div class="user-apps">
         <a href="https://arcg.is/1009WO" target="_blank" class="user-app">StoryMaps</a>
         <a href="https://experience.arcgis.com/experience/bd0340f81f194ab8a0a22dff74cf31ad" target="_blank" class="user-app">Experience Builder</a>
@@ -376,8 +350,8 @@
         <li>Planificar rutas y consultar restricciones ZBE según etiqueta DGT</li>
         <li>Localizar gasolineras, puntos de recarga y aparcamientos en ruta</li>
         <li>Descubrir puntos de interés turístico accesibles desde el itinerario</li>
-        <li>Reportar radares, accidentes y peligros con un único toque (QuickCapture)</li>
-        <li>Entender el proyecto y sus funcionalidades a través del StoryMap</li>
+        <li>Reportar incidencias de tráfico con un único toque (QuickCapture)</li>
+        <li>Acceder a servicios públicos abiertos del proyecto</li>
       </ul>
     </div>
 
@@ -386,7 +360,7 @@
 
 <!-- DOCUMENTACIÓN Y DESCARGABLES -->
 <section class="section section-fondo" id="documentacion">
-  <div class="section-tag tag-blue">Entregables técnicos</div>
+  <div class="section-tag tag-blue">Elementos del proyecto técnicos</div>
   <h2 class="section-title">Documentación y archivos del proyecto</h2>
   <p class="section-desc desc-dark">Descarga la documentación oficial del proyecto y los archivos técnicos necesarios para replicar o revisar el trabajo realizado.</p>
 
@@ -435,7 +409,7 @@
       <li><a href="#geodatabase">Geodatabase</a></li>
       <li><a href="#automatizacion">ModelBuilder y Python</a></li>
       <li><a href="#usuarios">Perfiles de usuario</a></li>
-      <li><a href="#documentacion">Documentación y ZIP</a></li>
+      <li><a href="#documentacion">Documentación y Archivos del Proyecto</a></li>
     </ul>
   </div>
   <div class="foot-col">
@@ -444,7 +418,7 @@
       <li><a href="index.html">← Volver al inicio</a></li>
       <li><a href="index.html#herramientas">Herramientas</a></li>
       <li><a href="index.html#funcionalidades">Funcionalidades</a></li>
-      <li><a href="index.html#entregables">Entregables</a></li>
+      <li><a href="index.html#Elementos del proyecto">Elementos del proyecto</a></li>
     </ul>
   </div>
   <div class="foot-bottom">
