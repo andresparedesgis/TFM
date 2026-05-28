@@ -18,14 +18,16 @@ El sistema permite, entre otras cosas, calcular rutas teniendo en cuenta las res
 
 ```
 📦 TFM-SIG-Movilidad-Madrid
+Repositorio
 ├── 📄 Memoria/
 │   └── Trabajo_TFM_APF.pdf     # Memoria académica completa del TFM
 ├── 🌐 Web/
 │   ├── index.html                          # Página principal del proyecto
 │   └── tecnico.html                        # Página de documentación técnica
-├── 🔧 Releases/
-│   ├── Proyecto.Zip               # Proyecto completo para ArcGIS Pro
 └── 📄 README.md
+Releases
+└── Proyecto.Zip               # Proyecto completo para ArcGIS Pro
+
 ```
 
 ---
