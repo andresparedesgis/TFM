@@ -130,11 +130,10 @@ Todos los datos son de acceso abierto y libre reproducción, garantizando la rep
 
 ## 👥 Perfiles de usuario
 
-| Perfil | Herramientas | Permisos |
-|---|---|---|
-| **Técnicos GIS** | ArcGIS Pro, Field Maps, Experience Builder, todos los servicios | Edición y publicación |
-| **Gestores / Administración** | Dashboard, Experience Builder (consulta), capas operativas | Solo lectura |
-| **Ciudadanía general** | Experience Builder, QuickCapture | Consulta + reporte de incidencias |
+| Perfil de usuario                                    | Aplicaciones y herramientas                | Casos de uso principales                                                                                                                                              | Permisos                                                                |
+| ---------------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Técnicos GIS, Gestores y Servicios de Emergencia** | ArcGIS Pro, Field Maps, Experience Builder | Análisis espaciales avanzados, validación y actualización de datos en campo, gestión de incidencias, supervisión de infraestructuras y coordinación de emergencias    | Acceso completo a todos los servicios, incluyendo edición y publicación |
+| **Ciudadanía general y turistas**                    | Experience Builder, QuickCapture           | Consulta de rutas, visualización de ZBE, localización de gasolineras, puntos de recarga y aparcamientos, descubrimiento de puntos de interés y reporte de incidencias | Acceso a servicios públicos abiertos y envío de incidencias             |
 
 ---
 
