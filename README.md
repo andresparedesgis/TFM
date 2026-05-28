@@ -23,8 +23,8 @@ El sistema permite, entre otras cosas, calcular rutas teniendo en cuenta las res
 ├── 🌐 Web/
 │   ├── index.html                          # Página principal del proyecto
 │   └── tecnico.html                        # Página de documentación técnica
-├── 🔧 Proyecto/
-│   ├── Proyecto_Completo.Zip               # Proyecto completo para ArcGIS Pro
+├── 🔧 Release/
+│   ├── Proyecto.Zip               # Proyecto completo para ArcGIS Pro
 └── 📄 README.md
 ```
 
